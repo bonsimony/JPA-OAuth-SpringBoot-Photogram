@@ -2,6 +2,7 @@ package com.cos.photogramstart.domain.user;
 
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,11 @@ public class User {
 		@GeneratedValue(strategy = GenerationType.IDENTITY) // 번호 증가 전략이 데이터베이스를 따라간다.
 		private int id;
 		
-		
+		/*
+		 * @Column 어노테이션을 사용하여 제약조건을 설정하여 
+		 * 동일한 username이 등록되지 않도록 한다.
+		 */
+		@Column(unique = true)
 		private String username;
 		private String password;
 		

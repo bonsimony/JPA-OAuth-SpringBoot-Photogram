@@ -1,5 +1,8 @@
 package com.cos.photogramstart.service;
 
+import javax.transaction.Transactional;
+
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.cos.photogramstart.domain.user.User;
@@ -21,12 +24,21 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class AuthService {
 	
+	private final BCryptPasswordEncoder bCryptPasswordEncoder;
+	
 	private final UserRepository userRepository;
 	
+	
+	@Transactional //Write(Insert, Update, Delete)
 	public User 회원가입(User user) {
 		/*
 		 * user 변수는 외부에서 받은 통신을 통해서 User Object에 담은 것이다.
 		 */
+		
+		String rawPassword = user.getPassword();
+		String encPassword = bCryptPasswordEncoder.encode(rawPassword);
+		user.setPassword(encPassword);
+		user.setRole("ROLE_USER"); //관리자 : ROLE_ADMIN
 		
 		//회원가입 진행
 		User userEntity = userRepository.save(user);
