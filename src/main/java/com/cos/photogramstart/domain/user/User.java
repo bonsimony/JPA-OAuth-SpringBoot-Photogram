@@ -32,13 +32,22 @@ public class User {
 		 * @Column 어노테이션을 사용하여 제약조건을 설정하여 
 		 * 동일한 username이 등록되지 않도록 한다.
 		 */
-		@Column(unique = true)
+		@Column(
+						unique = true
+						, length = 20
+					  )
 		private String username;
+		
+		@Column(nullable = false)
 		private String password;
 		
+		@Column(nullable = false)
 		private String name;
+		
 		private String website;					// 웹사이트
 		private String bio;							// 자기소개
+		
+		@Column(nullable = false)
 		private String email;
 		private String phone;
 		private String gender;

@@ -1,9 +1,17 @@
 package com.cos.photogramstart.web;
 
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map;
+
+import javax.validation.Valid;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -60,7 +68,37 @@ public class AuthController {
 		
 		// 회원가입 -> /auth/signup -> /auth/signin
 		@PostMapping("/auth/signup")
-		public String signup(SignupDto signupDto) {
+		public String signup(
+											@Valid SignupDto signupDto
+											, BindingResult bindingResult
+										) 
+		{
+			
+			if(bindingResult.hasErrors()) {
+				Map<String, String> errorMap = new HashMap<>();
+				
+				// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
+				for(FieldError error : bindingResult.getFieldErrors()) {
+					errorMap.put(error.getField(), error.getDefaultMessage());
+					System.out.println("===================");
+					System.out.println(error.getDefaultMessage());
+					System.out.println("===================");
+				}
+			}
+			
+			// username 길이 20 초과 - Validation 체크
+//			if(signupDto.getUsername().length() > 20){
+//				
+//				System.out.println("username 갈이 20 초과");
+//			
+//			}
+//			else
+//			{
+//				User user = signupDto.toEntity();
+//				User userEntity = authService.회원가입(user);
+//			}
+			
+			
 			
 			/*
 			 * signup.jsp 파일에서 회원가입 form 태그 내 action과 method 속성 action = "/auth/signup"
@@ -74,9 +112,10 @@ public class AuthController {
 			
 			
 		     
-			
 			//System.out.println("siginup 살행됨?");
 			
+			
+			//User <- SignupDto
 			User user = signupDto.toEntity();
 			log.info(user.toString());
 			
