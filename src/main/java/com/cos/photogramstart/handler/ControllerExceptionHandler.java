@@ -24,8 +24,12 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(CustomValidationException.class)
 	public String validationException(CustomValidationException e) {
 			
-			
 			return Script.back(e.getErrorMap().toString());
+
+// Script 클래스 back 함수 static이 선언되어 있지 않을때 객체를 생성한 후 진행해야 한다.
+// 반대로 Script 클래스 back 함수에 static 선언되어 있다면 객체를 생성하지 않고 곧바로 사용이 가능하다.
+//			Script sc = new Script();
+//			return sc.back(e.getErrorMap().toString());
 		}
 	
 //	@ExceptionHandler(CustomValidationException.class)
