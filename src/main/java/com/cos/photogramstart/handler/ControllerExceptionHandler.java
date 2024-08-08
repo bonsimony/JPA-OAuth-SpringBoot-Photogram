@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.photogramstart.handler.ex.CustomValidationException;
+import com.cos.photogramstart.util.Script;
 import com.cos.photogramstart.web.dto.CMRespDto;
 
 
@@ -15,13 +16,25 @@ import com.cos.photogramstart.web.dto.CMRespDto;
 @ControllerAdvice // @ControllerAdive 어노테이션으로 모든 exception 처리가 가능하다.
 public class ControllerExceptionHandler {
 	
+	// CMRespDto, Script 비교
+	// 1. 클라이언트에게 응답할때는 Script
+	// 2. Ajax 통신 - CMRespDto (개발자 응답)
+	// 3. Android 통신 - CMRespDto (개발자 응답)
+	
 	@ExceptionHandler(CustomValidationException.class)
-	public CMRespDto<?> validationException(CustomValidationException e) {
-			// 제네릭에 어떤 타입을 전달해야할지 모를때 "?"을 사용하면 알아서 찾아간다.
-			// 제네릭을 사용하여 리턴할때 "?"를 사용하면 편하다.
-		
-			return new CMRespDto<Map<String,String>>(-1, e.getMessage(), e.getErrorMap());
+	public String validationException(CustomValidationException e) {
+			
+			
+			return Script.back(e.getErrorMap().toString());
 		}
+	
+//	@ExceptionHandler(CustomValidationException.class)
+//	public CMRespDto<?> validationException(CustomValidationException e) {
+//			// 제네릭에 어떤 타입을 전달해야할지 모를때 "?"을 사용하면 알아서 찾아간다.
+//			// 제네릭을 사용하여 리턴할때 "?"를 사용하면 편하다.
+//		
+//			return new CMRespDto<Map<String,String>>(-1, e.getMessage(), e.getErrorMap());
+//		}
 
 //	@ExceptionHandler(CustomValidationException.class)
 //	public CMRespDto<Map<String, String>> validationException(CustomValidationException e) {
