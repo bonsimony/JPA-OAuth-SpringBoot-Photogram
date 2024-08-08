@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.AuthService;
 import com.cos.photogramstart.web.dto.auth.SignupDto;
 
@@ -66,14 +67,93 @@ public class AuthController {
 			
 			return "auth/signup";
 		}
+
 		
-		// 회원가입 -> /auth/signup -> /auth/signin
+/****************************************************************/
+		
+//		// 회원가입 -> /auth/signup -> /auth/signin
+//		@PostMapping("/auth/signup")
+//		public @ResponseBody String signup(
+//				/*
+//				 * 컨트롤러이지만 @ResponseBody 어노테이션을 활용하면 
+//				 * return 타입이 파일이 아닌 데이터 값을 리턴한다.
+//				 */
+//											@Valid SignupDto signupDto
+//											, BindingResult bindingResult
+//										) 
+//		{
+//			
+//			if(bindingResult.hasErrors()) {
+//				Map<String, String> errorMap = new HashMap<>();
+//				
+//				// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
+//				for(FieldError error : bindingResult.getFieldErrors()) {
+//					errorMap.put(error.getField(), error.getDefaultMessage());
+//					System.out.println("===================");
+//					System.out.println(error.getDefaultMessage());
+//					System.out.println("===================");
+//				}
+//				
+//				return "오류남";
+//				
+//			}
+//			else
+//			{
+//				
+//				User user = signupDto.toEntity();
+//				User userEntity = authService.회원가입(user);
+//				
+//				System.err.println(userEntity);
+//				
+//				return "auth/signin";
+//				
+//			}
+//			
+//			// username 길이 20 초과 - Validation 체크
+////			if(signupDto.getUsername().length() > 20){
+////				
+////				System.out.println("username 갈이 20 초과");
+////			
+////			}
+////			else
+////			{
+////				User user = signupDto.toEntity();
+////				User userEntity = authService.회원가입(user);
+////			}
+//			
+//			
+//			
+//			/*
+//			 * signup.jsp 파일에서 회원가입 form 태그 내 action과 method 속성 action = "/auth/signup"
+//			 * method = "post" username, password, email, name이라는 name 값이 key가 되고 input box에
+//			 * 입력된 값은 value가 된다. 데이터가 {key : value} 형식으로 들어오게 되는데 이 방식을
+//			 * x-www-form-url-encoded라고 한다.
+//			 */
+//		
+//			//log.info(signupDto.toString());
+//			// 문자열만 받을 수 있어서 toString()으로 형변환을 해준다.
+//			
+//			
+//		     
+//			//System.out.println("siginup 살행됨?");
+//			
+//			
+//			//User <- SignupDto
+//			//User user = signupDto.toEntity();
+//			//log.info(user.toString());
+//			
+//			//User userEntity = authService.회원가입(user);
+//			//System.out.println(userEntity);
+//			
+//			//return "auth/signin";
+//			// 회원가입을 성공하면 로그인 화면으로 이동
+//		}
+		
+/****************************************************************/	
+
+//		// 회원가입 -> /auth/signup -> /auth/signin
 		@PostMapping("/auth/signup")
-		public @ResponseBody String signup(
-				/*
-				 * 컨트롤러이지만 @ResponseBody 어노테이션을 활용하면 
-				 * return 타입이 파일이 아닌 데이터 값을 리턴한다.
-				 */
+		public String signup(
 											@Valid SignupDto signupDto
 											, BindingResult bindingResult
 										) 
@@ -90,8 +170,19 @@ public class AuthController {
 					System.out.println("===================");
 				}
 				
-				return "오류남";
+				/*
+				 * SignupDto 클래스에서 유효성 검사가 하나라도 실패하면 
+				 * bindingResult 변수에 담기게 되고 
+				 * bindingResult에 에러가 하나라도 있으면 
+				 * HashMap<>에 모두 담고 throw를 통해 exception을 강제로 발동시켜서 에러를 던진다.
+				 */
+				throw new CustomValidationException("유효성 검사 실패함", errorMap);
 				
+				//throw new RuntimeException("유효성 검사 실패함");
+				/*
+				 * RuntimeException을 ControllerExceptionHandler 클래스에서 
+				 * validationException 함수 값으로 리턴이 되어 화면에 표출
+				 */
 			}
 			else
 			{
@@ -105,47 +196,7 @@ public class AuthController {
 				
 			}
 			
-			// username 길이 20 초과 - Validation 체크
-//			if(signupDto.getUsername().length() > 20){
-//				
-//				System.out.println("username 갈이 20 초과");
-//			
-//			}
-//			else
-//			{
-//				User user = signupDto.toEntity();
-//				User userEntity = authService.회원가입(user);
-//			}
-			
-			
-			
-			/*
-			 * signup.jsp 파일에서 회원가입 form 태그 내 action과 method 속성 action = "/auth/signup"
-			 * method = "post" username, password, email, name이라는 name 값이 key가 되고 input box에
-			 * 입력된 값은 value가 된다. 데이터가 {key : value} 형식으로 들어오게 되는데 이 방식을
-			 * x-www-form-url-encoded라고 한다.
-			 */
-		
-			//log.info(signupDto.toString());
-			// 문자열만 받을 수 있어서 toString()으로 형변환을 해준다.
-			
-			
-		     
-			//System.out.println("siginup 살행됨?");
-			
-			
-			//User <- SignupDto
-			//User user = signupDto.toEntity();
-			//log.info(user.toString());
-			
-			//User userEntity = authService.회원가입(user);
-			//System.out.println(userEntity);
-			
-			//return "auth/signin";
-			// 회원가입을 성공하면 로그인 화면으로 이동
-		}
-		
-	
+		}		
 
 }
 
