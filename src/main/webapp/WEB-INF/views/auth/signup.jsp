@@ -33,6 +33,9 @@
                         																				데이터에베이스에 INSERT 하기 위함 
                         																			-->
                             <input type="text" name="username" placeholder="유저네임" required="required" />
+                            																						  <!-- required 속성에 required 값이 들어가 있으면 필수입력 체크가 된다.
+                            																						  하지만 postman 프로그램으로 x-www-form-urlencode 로 값을 넘기면 값을 넘길 수 있기 때문에
+                            																						  프론트뿐만 아니라 백엔드에도 막아줘야한다 -->
                             <input type="password" name="password" placeholder="패스워드" required="required" />
                             <input type="email" name="email" placeholder="이메일" required="required" />
                             <input type="text" name="name" placeholder="이름" required="required" />
