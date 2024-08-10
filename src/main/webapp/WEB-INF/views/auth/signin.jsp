@@ -24,7 +24,19 @@
                         <h1><img src="/images/logo.jpg" alt=""></h1>
                         
                         <!--로그인 인풋-->
-                        <form class="login__input" >
+                        <form class="login__input"  action = "/auth/signin" method = "POST">
+                        										   <!-- 
+                        										   	action 속성의 값은 /auth/signin이라고 하고
+                        										   	method 속성의 값은 POST라고 한다.
+                        										   	method 속성의 값을 POST라고 하는 이유는 로그인하는 정보는 귀중한 정보이기 때문에
+                        										   	method 속성의 값을 GET이라고 하면 주소창에 노출되기 때문이다. 
+                        										   -->
+                        										   
+                        										   <!-- 
+                        										   	로그인에 대한 Controller를 따로 만들지 않고 Security에 위임한다. 
+                        										   	SercurityConfig 클래스에서 처리한다.
+                        										   -->
+                        										   
                             <input type="text" name="username" placeholder="유저네임" required="required" />
                             <input type="password" name="password" placeholder="비밀번호" required="required" />
                             <button>로그인</button>
