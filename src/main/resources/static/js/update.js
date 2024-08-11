@@ -29,6 +29,7 @@ function update(userid) {
 	})
 	.done(res=>{	
 		console.log("성공");
+		location.href = `/user/${userid}`;
 	})
 	.fail(error=>{
 		console.log("실패");
