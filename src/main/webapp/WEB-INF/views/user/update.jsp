@@ -132,7 +132,8 @@
 							value="0102222" /> -->
 						<%-- <input type="text" name="tel" placeholder="전화번호"
 							value=${principal.phone } /> --%>
-						<input type="text" name="tel" placeholder="전화번호" value="${principal.user.phone}"/>
+						<%-- <input type="text" name="tel" placeholder="전화번호" value="${principal.user.phone}"/> --%>
+						<input type="text" name="phone" placeholder="전화번호" value="${principal.user.phone}"/>
 							
 							
 					</div>
@@ -154,7 +155,14 @@
 				<div class="content-item__11">
 					<div class="item__title"></div>
 					<div class="item__input">
-						<button>제출</button>
+					
+					
+						<!-- <button>제출</button> -->
+						<!-- <button onclick = "update()">제출</button> -->
+						<!-- <button onclick = "update(${principal.user.id}, event)">제출</button> -->
+						<%-- <button type = "button" onclick = "update(${principal.user.id}, event)">제출</button> --%>
+						<button type = "button" onclick = "update(${principal.user.id})">제출</button>
+						
 					</div>
 				</div>
 				<!--제출버튼end-->

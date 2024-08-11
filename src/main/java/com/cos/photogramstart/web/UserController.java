@@ -106,7 +106,8 @@ public class UserController {
 			// @AuthenticationPrincipal 어노테이션으로 접근하면 Authentication 객체에 바로 접근이 가능하다. (자세한 내용은 제일 밑에 주석내용 확인)
 			, @AuthenticationPrincipal PrincipalDetails principalDetails
 			
-			//, Model model
+			//, Model mode
+			// Model 객체로 처리하는것이 아닌 jsp 시류리티 태그로 처리하여 주석l
 			/*
 			 * header.jsp 에서 아래 태그로 처리 <sec:authorize access = "isAuthenticated()">
 			 * <sec:authentication property="principal" var = "principal">
@@ -132,7 +133,8 @@ public class UserController {
 
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
 		
-		/* model.addAttribute("principal", principalDetails.getUser()); */
+		// Model 객체로 처리하는것이 아닌 jsp 시류리티 태그로 처리하여 주석
+		// model.addAttribute("principal", principalDetails.getUser()); */
 		/*
 		 * header.jsp 에서 아래 태그로 처리 <sec:authorize access = "isAuthenticated()">
 		 * <sec:authentication property="principal" var = "principal">
