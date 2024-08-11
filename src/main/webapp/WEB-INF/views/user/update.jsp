@@ -20,7 +20,7 @@
 				
 					<!-- <h2>TherePrograming</h2> -->
 					<%-- <h2>${principal.username }</h2> --%>
-					<h2>${principal.user.username }</h2>
+					<h2>${principal.user.username}</h2>
 					<!--
 						 JSP에 EL(Expression Language)표현식이라고 하며
 						UserController에서 
@@ -50,8 +50,7 @@
 							value="겟인데어" /> -->
 						<%-- <input type="text" name="name" placeholder="이름"
 						value=${principal.name } /> --%>
-						<input type="text" name="name" placeholder="이름"
-						value=${principal.user.name} />
+						<input type="text" name="name" placeholder="이름" value="${principal.user.name}"/>
 							
 							
 					</div>
@@ -65,8 +64,7 @@
 							value="TherePrograming" readonly="readonly" /> -->
 						<%-- <input type="text" name="username" placeholder="유저네임"
 							value=${principal.username } readonly="readonly" /> --%>
-						<input type="text" name="username" placeholder="유저네임"
-							value=${principal.user.username } readonly="readonly" />
+						<input type="text" name="username" placeholder="유저네임" value="${principal.user.username}" readonly="readonly" />
 							
 							
 					</div>
@@ -86,8 +84,8 @@
 							value="https://github.com/codingspecialist" /> -->
 				<%-- 		<input type="text" name="website" placeholder="웹 사이트"
 							value=${principal.website }/> --%>	
-						<input type="text" name="website" placeholder="웹 사이트"
-							value=${principal.user.website }/>
+						<input type="text" name="website" placeholder="웹 사이트" value="${principal.user.website}"/>
+						
 							
 							
 					</div>
@@ -99,7 +97,7 @@
 					
 						<!-- <textarea name="bio" id="" rows="3">프로그래머</textarea> -->
 						<%-- <textarea name="bio" id="" rows="3">${principal.bio }</textarea> --%>
-						<textarea name="bio" id="" rows="3">${principal.user.bio }</textarea>
+						<textarea name="bio" id="" rows="3">${principal.user.bio}</textarea>
 						
 						
 					</div>
@@ -120,8 +118,7 @@
 							value="getinthere@naver.com" readonly="readonly" /> -->
 						<%-- <input type="text" name="email" placeholder="이메일"
 							value=${principal.email } readonly="readonly" /> --%>
-						<input type="text" name="email" placeholder="이메일"
-							value=${principal.user.email } readonly="readonly" />			
+						<input type="text" name="email" placeholder="이메일" value="${principal.user.email}" readonly="readonly" />			
 							
 							
 					</div>
@@ -135,8 +132,7 @@
 							value="0102222" /> -->
 						<%-- <input type="text" name="tel" placeholder="전화번호"
 							value=${principal.phone } /> --%>
-						<input type="text" name="tel" placeholder="전화번호"
-							value=${principal.user.phone } />
+						<input type="text" name="tel" placeholder="전화번호" value="${principal.user.phone}"/>
 							
 							
 					</div>
@@ -148,7 +144,7 @@
 					
 						<!-- <input type="text" name="gender" value="남" /> -->
 						<%-- <input type="text" name="gender" value=${principal.gender } /> --%>
-						<input type="text" name="gender" value=${principal.user.gender } />
+						<input type="text" name="gender" value="${principal.user.gender}" />
 						
 						
 					</div>

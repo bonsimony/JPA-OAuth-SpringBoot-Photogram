@@ -140,6 +140,69 @@ public class UserController {
 		 */
 		
 		
+		/*
+		 * pom.xml 내에 있는 시큐리티 태그 라이브러리가 설정되어 있어야 한다. 
+		 *	해당 header.jsp 파일에 taglib 태그에 prefix 속성인 prefix c와 sec가  있어야 한다.	
+		*/
+	
+	 /*pom.xml */
+	/*시큐리티 태그 라이브러리 */
+			
+				
+				/*<dependency>
+					<groupId>org.springframework.security</groupId>
+					<artifactId>spring-security-taglibs</artifactId>
+				</dependency> */
+			
+			
+	/*header.jsp*/ 
+	
+			/*
+			 * <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+			 * <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags"%>
+			 */
+
+		/*
+		 * <sec:authorize access = "isAuthenticated()">
+		 *
+		 * </sec:authorize> 
+		 */
+
+		/*
+		 * 하나의 문법이다!!!
+		 * isAuthenticated() 해서 인증된 정보에 접근하는 방법이다.
+		 * 즉, 세션에 접근하는 방법이다. 
+		 * 다음에 사용할때는 <sec:authentication property="principal" var = "principal"> </sec:authentication>
+		 * 해당 부분에 var = "principal" 이라는 변수값만 변경하여 사용하고자 하는 변수만 맞춰서 사용하면 된다.
+		 */
+	
+
+			
+
+
+
+
+		/*
+		 * 01. UserController Model 객체 활용 : O UserController에서 Model 객체를 활용하여
+		 * model.addAttribute("principal", principalDetails.getUser()); 위의 해당 코드를 시용하기
+		 * 위해서는 아래와 같이 EL(Expresiion Language) 표현식을 사용한다. ${principal.username}
+		 * ${principal.name} ${principal.website} ${principal.phone} ${principal.bio}
+		 * 
+		 * 02. UserController Model 객체 활용 : X ->> <sec:authorize access =
+		 * "isAuthenticated()"> <sec:authentication property="principal" var =
+		 * "principal"> </sec:authentication></sec:authorize> <sec:authorize access =
+		 * "isAuthenticated()"> <sec:authentication property="principal" var =
+		 * "principal"> </sec:authentication> </sec:authorize> 위의 해당 코드로 EL(Expresiion
+		 * Language)을 사용할 수 있다. var = "principal" 에서 봤듯이 변수명이 principal이기 때문에 principal은
+		 * UserDetails를 가져오는 것인데 상속을 받아서 PrincipalDetails를 최종적으로 가져오게 되며
+		 * PrincipalDetails 안에 username을 가져오기 위해서는 아래와 같이 처리한다.
+		 * 
+		 * ${principal.user.username} ${principal.user.name} ${principal.user.website}
+		 * ${principal.user.phone} ${principal.user.bio}
+		 */
+	
+		
+		
 		return "user/update";
 	}
 	
