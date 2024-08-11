@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
@@ -63,9 +64,37 @@ public class UserController {
 /*********************************************************************************************************/	
 	
 	
+/*********************************************************************************************************/		
+//	@GetMapping
+//	("/user/{id}/update")
+//	public String update
+//	(
+//			// GetMappring의 {id}는 변수를 뜻한다.
+//			// id 변수를 담기 위해 @PathVariable 을 사용한다.
+//			@PathVariable int id
+//			
+//			// @AuthenticationPrincipal 어노테이션으로 접근하면 Authentication 객체에 바로 접근이 가능하다. (자세한 내용은 제일 밑에 주석내용 확인)
+//			, @AuthenticationPrincipal PrincipalDetails principalDetails
+//	) 
+//	{
+//		// 1. 추천
+//		System.out.println("세션 정보 : " + principalDetails.getUser());
+//		
+//		
+//		// 2. 극혐
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		PrincipalDetails mPrincipalDetails = (PrincipalDetails)auth.getPrincipal();
+//															// auth.getPrincipal() 값은 Obejct이기 때문에
+//															// (PrincipalDetails)auth.getPrincipal()으로 다운캐스팅을 해준다.
+//		
+//		System.out.println("직접 찾은 세션 정보 : "+mPrincipalDetails.getUser());
+//		
+//		return "user/update";
+//	}
 	
+/*********************************************************************************************************/		
 	
-	
+
 	@GetMapping
 	("/user/{id}/update")
 	public String update
@@ -76,11 +105,22 @@ public class UserController {
 			
 			// @AuthenticationPrincipal 어노테이션으로 접근하면 Authentication 객체에 바로 접근이 가능하다. (자세한 내용은 제일 밑에 주석내용 확인)
 			, @AuthenticationPrincipal PrincipalDetails principalDetails
+			
+			//, Model model
+			/*
+			 * header.jsp 에서 아래 태그로 처리 <sec:authorize access = "isAuthenticated()">
+			 * <sec:authentication property="principal" var = "principal">
+			 * </sec:authentication> </sec:authorize>
+			 */
 	) 
 	{
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+		
 		// 1. 추천
 		System.out.println("세션 정보 : " + principalDetails.getUser());
 		
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 		
 		// 2. 극혐
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -89,6 +129,16 @@ public class UserController {
 															// (PrincipalDetails)auth.getPrincipal()으로 다운캐스팅을 해준다.
 		
 		System.out.println("직접 찾은 세션 정보 : "+mPrincipalDetails.getUser());
+
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////		
+		
+		/* model.addAttribute("principal", principalDetails.getUser()); */
+		/*
+		 * header.jsp 에서 아래 태그로 처리 <sec:authorize access = "isAuthenticated()">
+		 * <sec:authentication property="principal" var = "principal">
+		 * </sec:authentication> </sec:authorize>
+		 */
+		
 		
 		return "user/update";
 	}
@@ -100,6 +150,7 @@ public class UserController {
 
 /// auth/siginin 요청이 왔을때
 // 시큐리티가 중간에서 낚아챈 후 시큐리티는 PrincipalDetailsService로 넘긴다.  (PrincipalDetailsService의 타입은 UserDetails이다.)
+// Principal 용어의 뜻은 접근주체, 인증주체이다.
 // PrincipalDetailsService에서 username을 확인을 한다.
 // PrincipalDetailsService에서 username이 없으면 접속 로그인 페이지로 다시 되돌린다.
 // PrincipalDetailsService에서 username이 있으면 

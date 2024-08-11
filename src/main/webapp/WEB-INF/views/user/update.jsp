@@ -16,25 +16,59 @@
 					<img src="#" onerror="this.src='/images/person.jpeg'" />
 				</div>
 				<div class="item__username">
-					<h2>TherePrograming</h2>
+				
+				
+					<!-- <h2>TherePrograming</h2> -->
+					<%-- <h2>${principal.username }</h2> --%>
+					<h2>${principal.user.username }</h2>
+					<!--
+						 JSP에 EL(Expression Language)표현식이라고 하며
+						UserController에서 
+						/user/{id}/update 
+						해당 주소로 넘어갔을 시
+						Model 객체를 활용하여
+						model.addAttribute("principal", principalDetails.getUser());
+						User Object를 불러내는데 
+						EL(Expression Language) 표현식에서는 
+						${principal.username} 을 보면 User 객체를 명시하지 않고 
+						User 객체 내에 있는 username을 명시하면 username의 Getter을 가져온다. 
+					-->
+					
+					
 				</div>
 			</div>
 			<!--프로필셋팅 아이디영역end-->
 
 			<!--프로필 수정-->
-			<form id="profileUpdate"">
+			<form id="profileUpdate">
 				<div class="content-item__02">
 					<div class="item__title">이름</div>
 					<div class="item__input">
+					
+					
+						<!-- <input type="text" name="name" placeholder="이름"
+							value="겟인데어" /> -->
+						<%-- <input type="text" name="name" placeholder="이름"
+						value=${principal.name } /> --%>
 						<input type="text" name="name" placeholder="이름"
-							value="겟인데어" />
+						value=${principal.user.name} />
+							
+							
 					</div>
 				</div>
 				<div class="content-item__03">
 					<div class="item__title">유저네임</div>
 					<div class="item__input">
+					
+					
+						<!-- <input type="text" name="username" placeholder="유저네임"
+							value="TherePrograming" readonly="readonly" /> -->
+						<%-- <input type="text" name="username" placeholder="유저네임"
+							value=${principal.username } readonly="readonly" /> --%>
 						<input type="text" name="username" placeholder="유저네임"
-							value="TherePrograming" readonly="readonly" />
+							value=${principal.user.username } readonly="readonly" />
+							
+							
 					</div>
 				</div>
 				<div class="content-item__04">
@@ -46,14 +80,28 @@
 				<div class="content-item__05">
 					<div class="item__title">웹사이트</div>
 					<div class="item__input">
+					
+					
+						<!-- <input type="text" name="website" placeholder="웹 사이트"
+							value="https://github.com/codingspecialist" /> -->
+				<%-- 		<input type="text" name="website" placeholder="웹 사이트"
+							value=${principal.website }/> --%>	
 						<input type="text" name="website" placeholder="웹 사이트"
-							value="https://github.com/codingspecialist" />
+							value=${principal.user.website }/>
+							
+							
 					</div>
 				</div>
 				<div class="content-item__06">
 					<div class="item__title">소개</div>
 					<div class="item__input">
-						<textarea name="bio" id="" rows="3">프로그래머</textarea>
+					
+					
+						<!-- <textarea name="bio" id="" rows="3">프로그래머</textarea> -->
+						<%-- <textarea name="bio" id="" rows="3">${principal.bio }</textarea> --%>
+						<textarea name="bio" id="" rows="3">${principal.user.bio }</textarea>
+						
+						
 					</div>
 				</div>
 				<div class="content-item__07">
@@ -66,21 +114,43 @@
 				<div class="content-item__08">
 					<div class="item__title">이메일</div>
 					<div class="item__input">
+					
+					
+						<!-- <input type="text" name="email" placeholder="이메일"
+							value="getinthere@naver.com" readonly="readonly" /> -->
+						<%-- <input type="text" name="email" placeholder="이메일"
+							value=${principal.email } readonly="readonly" /> --%>
 						<input type="text" name="email" placeholder="이메일"
-							value="getinthere@naver.com" readonly="readonly" />
+							value=${principal.user.email } readonly="readonly" />			
+							
+							
 					</div>
 				</div>
 				<div class="content-item__09">
 					<div class="item__title">전회번호</div>
 					<div class="item__input">
+					
+					
+						<!-- <input type="text" name="tel" placeholder="전화번호"
+							value="0102222" /> -->
+						<%-- <input type="text" name="tel" placeholder="전화번호"
+							value=${principal.phone } /> --%>
 						<input type="text" name="tel" placeholder="전화번호"
-							value="0102222" />
+							value=${principal.user.phone } />
+							
+							
 					</div>
 				</div>
 				<div class="content-item__10">
 					<div class="item__title">성별</div>
 					<div class="item__input">
-						<input type="text" name="gender" value="남" />
+					
+					
+						<!-- <input type="text" name="gender" value="남" /> -->
+						<%-- <input type="text" name="gender" value=${principal.gender } /> --%>
+						<input type="text" name="gender" value=${principal.user.gender } />
+						
+						
 					</div>
 				</div>
 
