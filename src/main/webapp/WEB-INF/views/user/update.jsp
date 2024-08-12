@@ -40,7 +40,25 @@
 			<!--프로필셋팅 아이디영역end-->
 
 			<!--프로필 수정-->
-			<form id="profileUpdate">
+			
+			
+			<!-- <form id="profileUpdate" > -->
+			<!--<form id="profileUpdate" onsubmit="update(${principal.user.id})">-->
+			<!--
+				 form 태그 내 action 속성이 없으면 자기 자신으로 다시 되돌아온다. 
+			-->
+			
+			
+			<form id="profileUpdate" onsubmit="update(
+																					${principal.user.id}
+																					, event
+																			   )"
+																			   									>
+			<!--
+				 form 태그 onsubmit 속성의 값인 update 함수에 event 변수를 추가한다. 
+			-->
+			
+			
 				<div class="content-item__02">
 					<div class="item__title">이름</div>
 					<div class="item__input">
@@ -50,8 +68,8 @@
 							value="겟인데어" /> -->
 						<%-- <input type="text" name="name" placeholder="이름"
 						value=${principal.name } /> --%>
-						<input type="text" name="name" placeholder="이름" value="${principal.user.name}"/>
-							
+						<%-- <input type="text" name="name" placeholder="이름" value="${principal.user.name}"/> --%>
+						<input type="text" name="name" placeholder="이름" value="${principal.user.name}"  required="required"/>	
 							
 					</div>
 				</div>
@@ -72,7 +90,12 @@
 				<div class="content-item__04">
 					<div class="item__title">패스워드</div>
 					<div class="item__input">
-						<input type="password" name="password" placeholder="패스워드"  />
+					
+					
+						<!-- <input type="password" name="password" placeholder="패스워드"  /> -->
+						<input type="password" name="password" placeholder="패스워드" required="required"  />
+						
+						
 					</div>
 				</div>
 				<div class="content-item__05">
@@ -161,7 +184,21 @@
 						<!-- <button onclick = "update()">제출</button> -->
 						<!-- <button onclick = "update(${principal.user.id}, event)">제출</button> -->
 						<%-- <button type = "button" onclick = "update(${principal.user.id}, event)">제출</button> --%>
-						<button type = "button" onclick = "update(${principal.user.id})">제출</button>
+						
+						<%-- <button type = "button" onclick = "update(${principal.user.id})">제출</button> --%>
+						<!-- button type을 button으로 할 시 input 태그 내 required 속성이 적용되지 않는다. -->
+						
+						
+						
+						<button>제출</button>
+						<!--  
+								01. required 속성을 추가하여 프론트 단에서 유효성 검사 진행함.
+								02. button 타입에 속성이 없는 경우에 form 태그가 실행이 되며 새로고침 되는 현상이 발생한다.
+								03. form 태그 onsubmit 속성 값인 update 함수에 event 인자를 추가하여 
+								      스크립트 상에서 preventDefault()를 통해 form 태그를 통한 새로고침 되는 현상을 막는다.
+						-->
+						
+						
 						
 					</div>
 				</div>

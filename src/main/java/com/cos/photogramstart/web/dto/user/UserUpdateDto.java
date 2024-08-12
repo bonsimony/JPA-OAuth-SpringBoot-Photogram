@@ -1,5 +1,7 @@
 package com.cos.photogramstart.web.dto.user;
 
+import javax.validation.constraints.NotBlank;
+
 import com.cos.photogramstart.domain.user.User;
 
 import lombok.Data;
@@ -7,8 +9,18 @@ import lombok.Data;
 @Data //getter, setter 생성
 public class UserUpdateDto {
 	
+	@NotBlank
 	private String name;			// 필수
+	
+	@NotBlank
 	private String password;		// 필수
+	
+	/*
+	 * @NotBlank 어노테이션만 추가했다고 해서 
+	 * 서버에서 DB로 향할때 유효성 검사가 완료가 되지 않고 
+	 * UserApiController에서 update 함수 인자에 UserUpdateDto 객체 앞에 @Vailid 어노테이션을 추가한다.
+	 */
+	
 	private String website;
 	private String bio;
 	private String phone;
