@@ -22,6 +22,9 @@ public class ControllerExceptionHandler {
 	@ExceptionHandler(CustomValidationApiException.class)
 	public ResponseEntity<?> validationApiException(CustomValidationApiException e) {
 		
+			System.out.println("============validationApiException=============");
+			
+			
 			// CMRespDto, Script 비교
 			// 1. 클라이언트에게 응답할때는 Script
 			// 2. Ajax 통신 - CMRespDto (개발자 응답)
