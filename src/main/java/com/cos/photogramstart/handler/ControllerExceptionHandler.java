@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cos.photogramstart.handler.ex.CustomApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.util.Script;
@@ -18,6 +19,26 @@ import com.cos.photogramstart.web.dto.CMRespDto;
 						// @RestContoller = @Controller + @ResponseBody
 @ControllerAdvice // @ControllerAdive 어노테이션으로 모든 exception 처리가 가능하다.
 public class ControllerExceptionHandler {
+	
+	// PostMan으로 요청을 보낼때 에러를 잡기 위해 추가해준다.
+	@ExceptionHandler(CustomApiException.class)
+	public ResponseEntity<?> validationException(CustomApiException e) {
+			return new ResponseEntity<>(new CMRespDto<>(-1, e.getMessage(), null), HttpStatus.BAD_REQUEST);
+		}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	@ExceptionHandler(CustomValidationApiException.class)
 	public ResponseEntity<?> validationApiException(CustomValidationApiException e) {
