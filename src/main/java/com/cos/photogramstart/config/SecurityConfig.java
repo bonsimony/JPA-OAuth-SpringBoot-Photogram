@@ -35,7 +35,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 			// super 삭제 - 기존 시큐리티가 가지고 있는 기능이 다 비활성화됨
 			
 			http.authorizeRequests()
-				.antMatchers("/", "/user/**","/image/**", "/subscribe/**", "/comment/**").authenticated()
+				.antMatchers(
+									"/"
+									, "/user/**"
+									,"/image/**"
+									, "/subscribe/**"
+									, "/comment/**"
+									, "/api/**"
+									).authenticated()
 				// 해당 주소들은 인증이 필요함
 				
 				.anyRequest().permitAll()
