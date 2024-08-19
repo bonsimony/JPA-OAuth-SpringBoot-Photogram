@@ -97,6 +97,6 @@ public class ImageService {
 		Image imageEntity = imageRepository.save(image);
 		
 		
-		System.out.println(imageEntity);
+		//System.out.println(imageEntity);
 	}
 }
