@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.ImageService;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
 
@@ -55,6 +56,15 @@ public class ImageController {
 											 * */
 										  ) 
 	{
+		
+		if(imageUploadDto.getFile().isEmpty()) {
+			
+			System.out.println("이미지가 첨부되지 않았습니다.");
+			
+			throw new CustomValidationException("이미지가 첨부되지 않았습니다.", null);
+			
+		}
+		
 		// 서비스 호출
 		// Controller는 사용자로부터 데이터를 받아 Service로 보내주면 역할을 다한 것이다.
 		imageService.사진업로드(imageUploadDto, principalDetails);

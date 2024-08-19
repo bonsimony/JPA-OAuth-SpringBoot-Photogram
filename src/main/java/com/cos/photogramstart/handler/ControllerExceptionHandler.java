@@ -83,16 +83,6 @@ public class ControllerExceptionHandler {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	@ExceptionHandler(CustomValidationException.class)
 	public String validationException(CustomValidationException e) {
 			
@@ -101,13 +91,39 @@ public class ControllerExceptionHandler {
 			// 2. Ajax 통신 - CMRespDto (개발자 응답)
 			// 3. Android 통신 - CMRespDto (개발자 응답)
 		
-			return Script.back(e.getErrorMap().toString());
+			System.out.println("CustomValidationException 발동하는거니????????????");
+			
+			if(e.getErrorMap() == null) {
+				return Script.back(e.getMessage());
+			}else {
+				return Script.back(e.getErrorMap().toString());
+			}
+			
+			
 
-// Script 클래스 back 함수 static이 선언되어 있지 않을때 객체를 생성한 후 진행해야 한다.
-// 반대로 Script 클래스 back 함수에 static 선언되어 있다면 객체를 생성하지 않고 곧바로 사용이 가능하다.
-//			Script sc = new Script();
-//			return sc.back(e.getErrorMap().toString());
-		}
+		}	
+	
+	
+	
+	
+		
+//	@ExceptionHandler(CustomValidationException.class)
+//	public String validationException(CustomValidationException e) {
+//			
+//			// CMRespDto, Script 비교
+//			// 1. 클라이언트에게 응답할때는 Script
+//			// 2. Ajax 통신 - CMRespDto (개발자 응답)
+//			// 3. Android 통신 - CMRespDto (개발자 응답)
+//		
+//			System.out.println("CustomValidationException 발동하는거니????????????");
+//			
+//			return Script.back(e.getErrorMap().toString());
+//
+//// Script 클래스 back 함수 static이 선언되어 있지 않을때 객체를 생성한 후 진행해야 한다.
+//// 반대로 Script 클래스 back 함수에 static 선언되어 있다면 객체를 생성하지 않고 곧바로 사용이 가능하다.
+////			Script sc = new Script();
+////			return sc.back(e.getErrorMap().toString());
+//		}
 	
 	
 	
