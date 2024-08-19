@@ -37,6 +37,8 @@ public class UserController {
 //		User 객체를 보면 유저 정보만 가져오지 이미지 정보는 가져오지 않게 되어있다.
 //     User 객체에 양방향 매핑 처리를 해줘야 한다.
 		
+		
+		
 		return "user/profile";
 	}
 	

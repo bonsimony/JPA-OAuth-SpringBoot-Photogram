@@ -26,7 +26,12 @@
 		<!--유저정보 및 사진등록 구독하기-->
 		<div class="profile-right">
 			<div class="name-group">
-				<h2>TherePrograming</h2>
+
+
+				<!-- <h2>TherePrograming</h2> -->
+				<h2>${user.name}</h2>
+
+
 
 				<button class="cta" onclick="location.href='/image/upload'">사진등록</button>
 				<button class="cta" onclick="toggleSubscribe(this)">구독하기</button>
@@ -44,8 +49,16 @@
 				</ul>
 			</div>
 			<div class="state">
-				<h4>자기 소개입니다.</h4>
-				<h4>https://github.com/codingspecialist</h4>
+
+
+				<!-- <h4>자기 소개입니다.</h4> -->
+				<h4>${user.bio}</h4>
+
+
+				<!-- <h4>https://github.com/codingspecialist</h4> -->
+				<h4>${user.website}</h4>
+
+
 			</div>
 		</div>
 		<!--유저정보 및 사진등록 구독하기-->
@@ -63,9 +76,37 @@
 			<div class="tab-1-content-inner">
 
 				<!--아이템들-->
+				
+				<!-- JSTL 문법 -->						
+				<c:forEach var = "image" items = "${user.images}"> 
+															    <!-- User 객체의 images를 말하는 것이다. --> 
+															    <!--   EL 표현식에서 변수명을 적으면 get 함수가 자동 호출된다.  -->
+																<!--   itmes의 값을 통해 사진이 여러장 있으면 for문을 돌면서 var = "image" 에 담기게 된다  -->
+																<!-- EL 표현식은 주석을 해도 인식을 한다!!! -->
+					<div class="img-box">
+						
+						<!-- <a href=""> <img src="/images/home.jpg" /> -->
+						
+						<a href=""> <img src="/upload/${image.postImageUrl}" /> 
+															<!-- 
+															  /upload/** 패턴이 발동하면 
+															  WebMvcConfig 통해서 
+															  C:/workspace/springbootwork/upload/ 
+															  주소로 변경해준다. 
+															 -->
+						
+						
+						</a>
+						<div class="comment">
+							<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
+							</a>
+						</div>
+					</div>
+
+				</c:forEach>
 
 
-				<div class="img-box">
+				<!-- <div class="img-box">
 					<a href=""> <img src="/images/home.jpg" />
 					</a>
 					<div class="comment">
@@ -81,16 +122,7 @@
 						<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
 						</a>
 					</div>
-				</div>
-
-				<div class="img-box">
-					<a href=""> <img src="/images/home.jpg" />
-					</a>
-					<div class="comment">
-						<a href="#" class=""> <i class="fas fa-heart"></i><span>0</span>
-						</a>
-					</div>
-				</div>
+				</div> -->
 
 				<!--아이템들end-->
 			</div>
@@ -101,12 +133,12 @@
 <!--로그아웃, 회원정보변경 모달-->
 <div class="modal-info" onclick="modalInfo()">
 	<div class="modal">
-	
-	
+
+
 		<!-- <button onclick="location.href='/user/update'">회원정보 변경</button> -->
 		<button onclick="location.href='/user/1/update'">회원정보 변경</button>
-		
-		
+
+
 		<button onclick="location.href='/logout'">로그아웃</button>
 		<button onclick="closePopup('.modal-info')">취소</button>
 	</div>
@@ -137,7 +169,7 @@
 
 			<div class="subscribe__item" id="subscribeModalItem-1">
 				<div class="subscribe__img">
-					<img src="#" onerror="this.src='/images/person.jpeg'"/>
+					<img src="#" onerror="this.src='/images/person.jpeg'" />
 				</div>
 				<div class="subscribe__text">
 					<h2>love</h2>
@@ -150,7 +182,7 @@
 
 			<div class="subscribe__item" id="subscribeModalItem-2">
 				<div class="subscribe__img">
-					<img src="#" onerror="this.src='/images/person.jpeg'"/>
+					<img src="#" onerror="this.src='/images/person.jpeg'" />
 				</div>
 				<div class="subscribe__text">
 					<h2>ssar</h2>

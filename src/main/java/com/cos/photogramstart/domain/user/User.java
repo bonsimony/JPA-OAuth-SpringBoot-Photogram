@@ -38,10 +38,12 @@ public class User {
 		 * 동일한 username이 등록되지 않도록 한다.
 		 */
 		@Column(
-						unique = true
-						, length = 20
-					  )
+				unique = true
+				, length = 20
+			  )
 		private String username;
+		
+		
 		
 		@Column(nullable = false)
 		private String password;

@@ -28,7 +28,6 @@ public class UserService {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
-	
 	public User 회원프로필(int userid) {
 		// SELECT * FROM image WHERE userid = :userid;
 		User userEntity = userRepository.findById(userid).orElseThrow(() -> {
@@ -40,12 +39,26 @@ public class UserService {
 			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
 		});
 		
-		System.out.println("===============================================");
-		System.out.println(userEntity.getImages().get(0));
-		System.out.println("===============================================");
-		
 		return userEntity;
 	}
+	
+//	public User 회원프로필(int userid) {
+//		// SELECT * FROM image WHERE userid = :userid;
+//		User userEntity = userRepository.findById(userid).orElseThrow(() -> {
+//														// findById 를 사용할때 userid를 찾았을때
+//														// userid가 있는 경우와 없는 경우를 처리해줘야 하기 때문에
+//														// orElseThrow 를 사용해서 처리해줘야 한다.
+//														// orElseThrow는 화살표 함수를 사용하여 userid가 없을때 CustomException으로 처리한다.
+//			
+//			throw new CustomException("해당 프로필 페이지는 없는 페이지입니다.");
+//		});
+//		
+//		System.out.println("===============================================");
+//		System.out.println(userEntity.getImages().get(0));
+//		System.out.println("===============================================");
+//		
+//		return userEntity;
+//	}
 	
 	
 //	public void 회원프로필(int userid) {
