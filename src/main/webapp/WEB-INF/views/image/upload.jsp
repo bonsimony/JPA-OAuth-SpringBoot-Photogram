@@ -36,7 +36,11 @@
                     
                     <!--사진설명 + 업로드버튼-->
                     <div class="upload-form-detail">
-                   		 <input type="text" placeholder="사진설명" name="caption" /> <!-- {"cation" : "테스트"} -->
+                    
+                    
+                   		 <!-- <input type="text" placeholder="사진설명" name="caption"/> {"cation" : "테스트"} -->
+                   		 <input type="text" placeholder="사진설명" name="caption" required="required"/> 
+                   		 
                         <button class="cta blue">업로드</button>
                     </div>
                     <!--사진설명end-->
