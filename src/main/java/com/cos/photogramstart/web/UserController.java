@@ -9,27 +9,76 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.domain.user.User;
+import com.cos.photogramstart.service.UserService;
 
+import lombok.RequiredArgsConstructor;
+
+@RequiredArgsConstructor
 @Controller
 public class UserController {
-
-	// 브라우저 주소
-	// http://localhost:8080/user/1
-	// http://localhost:8080/user/2
-	// http://localhost:8080/user/3
-	// ... 
-	// user의 id값 마다 해당 id 값에 해당하는 유저의 프로필 화면을 보여준다.
+	
+	private final UserService userSerivce;
+	
 	@GetMapping("/user/{id}")
 	public String profile
 	(
-			// GetMappring의 {id}는 변수를 뜻한다.
-			// id 변수를 담기 위해 @PathVariable 을 사용한다.
 			@PathVariable int id
+			, Model model
+			// 데이터를 들고 가야하기 때문에 Model 객체를 추가한다.
 			
 	) 
 	{
+		User userEntity = userSerivce.회원프로필(id);
+		model.addAttribute("user", userEntity);
+		
+//		회원프로필 화면에는 회원정보, 이미지 정보, 게시물 개수, 구독정보를 들고가야한다.
+//		현재시점에서 Image 객체를 보면 이미지 정보와 유저 정보를 가져오지만
+//		User 객체를 보면 유저 정보만 가져오지 이미지 정보는 가져오지 않게 되어있다.
+//     User 객체에 양방향 매핑 처리를 해줘야 한다.
+		
 		return "user/profile";
 	}
+	
+	
+	
+	
+//	@GetMapping("/user/{id}")
+//	public String profile
+//	(
+//			@PathVariable int id
+//			, Model model
+//			// 데이터를 들고 가야하기 때문에 Model 객체를 추가한다.
+//			
+//	) 
+//	{
+//		userSerivce.회원프로필(id);
+//		model.addAttribute("images", null);
+//		
+//		return "user/profile";
+//	}
+	
+	
+	
+	
+	
+//	// 브라우저 주소
+//	// http://localhost:8080/user/1
+//	// http://localhost:8080/user/2
+//	// http://localhost:8080/user/3
+//	// ... 
+//	// user의 id값 마다 해당 id 값에 해당하는 유저의 프로필 화면을 보여준다.
+//	@GetMapping("/user/{id}")
+//	public String profile
+//	(
+//			// GetMappring의 {id}는 변수를 뜻한다.
+//			// id 변수를 담기 위해 @PathVariable 을 사용한다.
+//			@PathVariable int id
+//			
+//	) 
+//	{
+//		return "user/profile";
+//	}
 	
 
 /*********************************************************************************************************/	
