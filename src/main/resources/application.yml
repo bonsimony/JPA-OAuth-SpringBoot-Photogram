@@ -19,7 +19,7 @@ spring:
     password: cos1234
     
   jpa:
-    open-in-view: true
+    open-in-view: true #true #false
     hibernate:
       ddl-auto: update #update #update #none
       naming:

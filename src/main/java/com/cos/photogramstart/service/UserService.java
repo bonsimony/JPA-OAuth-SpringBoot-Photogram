@@ -3,10 +3,11 @@ package com.cos.photogramstart.service;
 import java.util.Optional;
 import java.util.function.Supplier;
 
-import javax.transaction.Transactional;
+
 
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
@@ -28,6 +29,31 @@ public class UserService {
 	
 	private final BCryptPasswordEncoder bCryptPasswordEncoder;
 	
+	// import org.springframework.transaction.annotation.Transactional; 
+	@Transactional(readOnly = true) // SELECT할때 @Transactional(readOnly = true)를 사용하는 이유는?
+													// 유저 1번 정보를 update를 할때 유저 1번 정보를 들고오게 되는데
+													// Repository에서 영속성컨텍스트로 요청을 했을때 
+													// 영속성컨텍스트에 유저 1번의 정보가 없다면 
+													// 영속성컨텍스트에서 다시 DataBase에게 요청을 해서 유저 1번의 정보를 가져오고
+													// 영속성컨텍스트에서 Repository로 유저1번의 정보를 가져온다.
+													// Repository로 유저 1번의 정보를 가져왔다면 스프링컨테이너로 가져온 것이기 때문에
+													// Service로 보낼 수 있고 그 다음엔 Controller로 보낼 수 있다.
+													// 이때 영속성컨텍스트 정보와 Repository 정보와 Data정보는 다 동기화
+													// 즉, 똑같은 상태이다.
+													// 이 상태에서 Service에서 에서 유저1번 정보에 username이 ssar이었는데 cos로 변경하면 
+													// Repository도 동일하게 유저 1번의 username이 cos로 변경되고 
+													// 영속성컨텍스트는 Repository를 참조하고 있기 때문에 동일하게 username이 cos로 변경된다.
+													// Controller -> Service -> Repository -> 영속성컨텍스트 -> DataBase 해당 순으로 요청이 진행되고 
+													// DataBase -> 영속성컨텍스트 -> Repository -> Service -> Controller 순으로 응답을 하게 되는데
+													// 응답을 할때 Service -> Controller 해당 시점에서 영속성컨텍스트는 변경된 오브젝트 DataBase에 flush를 하게 된다.
+													// flush는 유저 1번 username이 ssar에서 cos로 변경된 정보를 DataBase로 집어넣는다는 말이다. 비워낸다.
+													// 영속성컨텍스트는 응답을 하는 과정에서 Service가 끝나는 시점에서 변경된 오브젝트를 감지해야 하는데
+													// 변경이 되어야지 영속성컨텍스트를 통해 flush해서 DataBase에서 값이 변경되는데
+													// 변경이 되기전 계속해서 감지를 하게 되고 연산을 하게 된다.
+													// 변경이 감지되면 영속성컨텍스트에서 flush에서 DataBase로 변경을 하게 되면 더티체킹이 일어난다.
+													// @Transactional(readOnly = true) 어노테이션을 사용하면 변경이 되었는지 안되었는지 감지를 하지 않는다.
+												    // 읽기전용이기 때문에 변경감지를 하지 않는다.
+												    // 조금 더 영속성컨텍스트 JPA가 일을 더 적게 할 수 있다.
 	public User 회원프로필(int userid) {
 		// SELECT * FROM image WHERE userid = :userid;
 		User userEntity = userRepository.findById(userid).orElseThrow(() -> {

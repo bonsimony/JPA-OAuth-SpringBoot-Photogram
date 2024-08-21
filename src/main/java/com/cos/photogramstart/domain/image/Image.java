@@ -49,4 +49,30 @@ public class Image {
 	public void create() {
 		this.createDate = LocalDateTime.now();
 	}
+	
+	
+	
+/** 오브젝트를 콘솔에 출력할 때 문제가 될 수 있어서 User 부분을 출력되지 않도록 함!!!!!	**********************************************************************/
+	
+// 순서 (1)	
+// @Data 어노테이션을 사용하면 자동으로 toString() 함수가 생성된다!!!
+// 사진 업로드 시 ImageService 내에 imageEntity를 출력할때 왜 오류가 나는지 확인하면서 toString() 함수를 만든 것이다...
+//	@Override
+//	public String toString() {
+//		return "Image [id=" + id + ", caption=" + caption + ", postImageUrl=" + postImageUrl + ", user=" + user
+//				+ ", createDate=" + createDate + "]";
+//	}
+		
+
+// 순서 (2)
+// + ", user=" + user 제거하면 해결완료!!!!!
+//	@Override
+//	public String toString() {
+//		return "Image [id=" + id + ", caption=" + caption + ", postImageUrl=" + postImageUrl 
+//				+ ", createDate=" + createDate + "]";
+//	}
+
+	
+/*****************************************************************************************************************************/
 }
+
