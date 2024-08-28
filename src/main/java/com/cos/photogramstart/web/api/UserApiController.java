@@ -40,7 +40,6 @@ public class UserApiController {
 	// 회원정보 수정에 대한 service를 DI(Dependecy Injection)를 해준다.
 	private final UserService userService;
 	
-	
 	@PutMapping("/api/user/{id}")
 	public CMRespDto<?> update(
 													@PathVariable int id
@@ -53,11 +52,6 @@ public class UserApiController {
 	{
 		
 		
-		/*
-		 * UserUpdateDto 클래스에 @NotBlank 어노테이션이 적용되어 있는 name, password를
-		 * UserApiController에서 update 함수 내 UserUpdateDto 객체 앞 @Valid 어노테이션 적용하여
-		 * userUpdateDto 변수를 활용하여 BindingResult로 검증을 한다.
-		 */
 		if(bindingResult.hasErrors()) {
 			Map<String, String> errorMap = new HashMap<>();
 			
@@ -65,26 +59,78 @@ public class UserApiController {
 				
 				errorMap.put(error.getField(), error.getDefaultMessage());
 				
-				System.out.println("===============================");
-				System.out.println(error.getDefaultMessage());
-				System.out.println("===============================");
+				
 			}
 			
 			throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
 			
 		}
 		else {
-			
 			User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
-											// UserUpdateDto가 아닌 userUpdateDto.toEntity()을 사용해야 한다.
-											// UserService 클래스에 회원수정 함수에 2번째 인자는 User Object를 받기 때문이다.
-			
 			principalDetails.setUser(userEntity); // 세션 정보 변경
-			
-			return new CMRespDto<>(1, "회원수정완료", userEntity);
+			return new CMRespDto<>(1, "회원수정완료", userEntity); // 응답시에 userEntity의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.
+																							// 메시지컨버터가 JSON으로 변환되어서 응답해줄때!!!
+																							// -> User 객체 내 images에 @JsonIgnoreProperties 어노테이션으로 막아준다!!!
+																							// -> @JsonIgnoreProperties({"user"})
+																							//
+																							// User 객체 내부에 private List<Image> images;
+																							// images의 getter를 호출하게 되면 
+																							// private List<Image> images; 에 대한 정보들을 LAZY 로딩으로 모두 호출하는 것이다.
+																							// Image 객체 내 모든 getter를 호출하고 private User user; 로 인하여 
+																							// User 객체를 또 호출하게 된다.
+																							// 무한참조가 발생한다.
 		}
 		
 	}
+	
+	
+	
+	
+	
+//	@PutMapping("/api/user/{id}")
+//	public CMRespDto<?> update(
+//													@PathVariable int id
+//													
+//													, @Valid UserUpdateDto userUpdateDto
+//													, BindingResult bindingResult	// 꼭!!! @Valid가 적혀있는 다음 파라미터에 적어야됨!!!
+//													
+//													, @AuthenticationPrincipal PrincipalDetails principalDetails
+//												) 
+//	{
+//		
+//		
+//		/*
+//		 * UserUpdateDto 클래스에 @NotBlank 어노테이션이 적용되어 있는 name, password를
+//		 * UserApiController에서 update 함수 내 UserUpdateDto 객체 앞 @Valid 어노테이션 적용하여
+//		 * userUpdateDto 변수를 활용하여 BindingResult로 검증을 한다.
+//		 */
+//		if(bindingResult.hasErrors()) {
+//			Map<String, String> errorMap = new HashMap<>();
+//			
+//			for(FieldError error : bindingResult.getFieldErrors()) {
+//				
+//				errorMap.put(error.getField(), error.getDefaultMessage());
+//				
+//				System.out.println("===============================");
+//				System.out.println(error.getDefaultMessage());
+//				System.out.println("===============================");
+//			}
+//			
+//			throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
+//			
+//		}
+//		else {
+//			
+//			User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
+//											// UserUpdateDto가 아닌 userUpdateDto.toEntity()을 사용해야 한다.
+//											// UserService 클래스에 회원수정 함수에 2번째 인자는 User Object를 받기 때문이다.
+//			
+//			principalDetails.setUser(userEntity); // 세션 정보 변경
+//			
+//			return new CMRespDto<>(1, "회원수정완료", userEntity);
+//		}
+//		
+//	}
 	
 	
 	

@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 
 import com.cos.photogramstart.domain.image.Image;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -77,6 +78,9 @@ public class User {
 												// fetch가 Eager일 경우에 User를 SELECT 할때 해당 User id로 등록된 image들을 전부 JOIN해서 가져와
 		@OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
 //		@OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+		
+		@JsonIgnoreProperties({"user"}) // Image 객체 내부에 있는 user를 무시하고 JSON 파싱을 한다.
+														 // User 객체의 getter가 호출되지 않게 막는다.
 		private List<Image> images;
 		// yml 파일에서 jpa의 ddl-auto를 create를 해주면 컬럼을 만들어주는데 
 		// images는 List로 여러개를 표현하는 것인데 데이터베이스는 컬렉션이 들어가는게 없다.....
