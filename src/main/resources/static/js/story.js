@@ -83,7 +83,7 @@ function getStoryItem(image) {
 		<div class="sl__item__contents__icon">
 
 			<button>
-				<i class="fas fa-heart active" id="storyLikeIcon-1" onclick="toggleLike()"></i>
+				<i class="fas fa-heart active" id="storyLikeIcon-${image.id}" onclick="toggleLike(${image.id})"></i>
 			</button>
 		</div>
 
@@ -175,11 +175,9 @@ $(window).scroll(() => {
 
 
 
-
-
 // (3) 좋아요, 안좋아요
-function toggleLike() {
-	let likeIcon = $("#storyLikeIcon-1");
+function toggleLike(imageId) {
+	let likeIcon = $(`#storyLikeIcon-${imageId}`);
 	if (likeIcon.hasClass("far")) {
 		likeIcon.addClass("fas");
 		likeIcon.addClass("active");
@@ -190,6 +188,37 @@ function toggleLike() {
 		likeIcon.addClass("far");
 	}
 }
+
+
+
+
+
+
+// (3) 좋아요, 안좋아요
+//function toggleLike() {
+//	let likeIcon = $("#storyLikeIcon-1");
+//	if (likeIcon.hasClass("far")) {
+//		likeIcon.addClass("fas");
+//		likeIcon.addClass("active");
+//		likeIcon.removeClass("far");
+//	} else {
+//		likeIcon.removeClass("fas");
+//		likeIcon.removeClass("active");
+//		likeIcon.addClass("far");
+//	}
+//}
+
+
+
+
+
+
+
+
+
+
+
+
 
 // (4) 댓글쓰기
 function addComment() {
