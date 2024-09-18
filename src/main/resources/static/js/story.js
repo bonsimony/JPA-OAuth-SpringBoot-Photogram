@@ -8,21 +8,60 @@
  */
 
 //(1) 스토리 로드하기
+
+let page = 0;
+
 function storyLoad() {
 	$.ajax({
 		// get은 디폴트이기 때문에 type : get은 넣지 않아도 된다!!!
-		url : `/api/image`
+		url : `/api/image?page=${page}`
 		, dataType : "json" 
 	}).done(res =>{
 		console.log(res);
-		res.data.forEach((image)=>{
+		
+		res.data.content.forEach((image)=>{
 			let stroyItem = getStoryItem(image);
 			$("#storyList").append(stroyItem);
 		});
+		
+//		res.data.forEach((image)=>{
+//			let stroyItem = getStoryItem(image);
+//			$("#storyList").append(stroyItem);
+//		});
+		
 	}).fail(error =>{
 		console.log("오류", error);
 	});
 }
+
+
+
+
+
+
+//(1) 스토리 로드하기
+//function storyLoad() {
+//	$.ajax({
+//		// get은 디폴트이기 때문에 type : get은 넣지 않아도 된다!!!
+//		url : `/api/image`
+//		, dataType : "json" 
+//	}).done(res =>{
+//		console.log(res);
+//		
+//		res.data.content.forEach((image)=>{
+//			let stroyItem = getStoryItem(image);
+//			$("#storyList").append(stroyItem);
+//		});
+//		
+//		res.data.forEach((image)=>{
+//			let stroyItem = getStoryItem(image);
+//			$("#storyList").append(stroyItem);
+//		});
+//		
+//	}).fail(error =>{
+//		console.log("오류", error);
+//	});
+//}
 
 storyLoad();
 
@@ -101,11 +140,41 @@ function getStoryItem(image) {
 
 
 
-
 // (2) 스토리 스크롤 페이징하기
 $(window).scroll(() => {
-
+	//console.log("스크롤중");
+	//console.log("윈도우 scrollTop", $(window).scrollTop());
+	//console.log("문서의높이", $(document).height());
+	//console.log("윈도우 높이", $(window).height());
+	
+	let checkNum =  $(window).scrollTop() - ($(document).height() - $(window).height())
+	console.log(checkNum);
+	
+	if(checkNum < 1 && checkNum > -1){
+		page++;
+		storyLoad();
+	}
+	
 });
+
+
+
+
+
+// (2) 스토리 스크롤 페이징하기
+//$(window).scroll(() => {
+//
+//});
+
+
+
+
+
+
+
+
+
+
 
 
 // (3) 좋아요, 안좋아요

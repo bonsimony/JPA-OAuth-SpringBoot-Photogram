@@ -9,6 +9,8 @@ import java.util.UUID;
 
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,23 +28,21 @@ public class ImageService {
 
 	private final ImageRepository imageRepository;
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+	// import org.springframework.transaction.annotation.Transactional;
+		@Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서 더티체킹을 하고 데이터베이스 flush(반영)를 하는데
+													//  readOnly = true 이렇게 설정하면 읽기전용이기 때문에 데이터베이스에 반영하는 것을 하지 않는다.
+		public Page<Image> 이미지스토리(int principalId, Pageable pageable){
+			Page<Image> images = imageRepository.mStroy(principalId, pageable);
+			return images;
+		}
 	
 	// import org.springframework.transaction.annotation.Transactional;
-	@Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서 더티체킹을 하고 데이터베이스 flush(반영)를 하는데
-												//  readOnly = true 이렇게 설정하면 읽기전용이기 때문에 데이터베이스에 반영하는 것을 하지 않는다.
-	public List<Image> 이미지스토리(int principalId){
-		List<Image> images = imageRepository.mStroy(principalId);
-		return images;
-	}
+//	@Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서 더티체킹을 하고 데이터베이스 flush(반영)를 하는데
+//												//  readOnly = true 이렇게 설정하면 읽기전용이기 때문에 데이터베이스에 반영하는 것을 하지 않는다.
+//	public List<Image> 이미지스토리(int principalId){
+//		List<Image> images = imageRepository.mStroy(principalId);
+//		return images;
+//	}
 
 	
 	
