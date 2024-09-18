@@ -8,7 +8,12 @@
 		<article class="story-list" id="storyList">
 
 			<!--전체 리스트 아이템-->
-			<div class="story-list__item">
+
+			
+			
+			
+			
+			<!-- <div class="story-list__item">
 				<div class="sl__item__header">
 					<div>
 						<img class="profile-image" src="#"
@@ -56,7 +61,11 @@
 					</div>
 
 				</div>
-			</div>
+			</div> -->
+			
+			
+			
+			
 
 		</article>
 	</section>
