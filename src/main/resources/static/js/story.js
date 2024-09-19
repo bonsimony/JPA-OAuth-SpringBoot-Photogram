@@ -192,14 +192,65 @@ $(window).scroll(() => {
 // (3) 좋아요, 안좋아요
 function toggleLike(imageId) {
 	let likeIcon = $(`#storyLikeIcon-${imageId}`);
-	if (likeIcon.hasClass("far")) {
-		likeIcon.addClass("fas");
-		likeIcon.addClass("active");
-		likeIcon.removeClass("far");
-	} else {
+	if (likeIcon.hasClass("far")) { // 좋아요를 하겠다.
+		
+		
+		
+		// $.ajax().done().fail();
+		$.ajax({
+			type : "post"
+			, url : `/api/image/${imageId}/likes`
+			, dataType : "json" // 리턴값은 JSON 형태로 하겠다!!!!
+		}).done(res=>{
+			
+			
+			
+			let likeCountStr = $(`#storyLikeCount-${imageId}`).text();
+			// console.log("좋아요 카운트", likeCountStr);
+			
+			
+			let likeCount = Number(likeCountStr) + 1;
+			//console.log("좋아요 카운트 증가", likeCount);
+			
+			
+			$(`#storyLikeCount-${imageId}`).text(likeCount);
+			
+			
+			
+			likeIcon.addClass("fas");
+			likeIcon.addClass("active");
+			likeIcon.removeClass("far");
+		}).fail(error=>{
+			console.log("오류",error);
+		});
+		
+	} else { //좋아요를 취소 하겠다.
 		likeIcon.removeClass("fas");
-		likeIcon.removeClass("active");
-		likeIcon.addClass("far");
+		
+		//$.ajax().done().fail();
+		$.ajax({
+			type : "delete"
+			, url : `/api/image/${imageId}/likes`
+		}).done(res =>{
+			
+			
+			
+			let likeCountStr = $(`#storyLikeCount-${imageId}`).text();
+			let likeCount = Number(likeCountStr) - 1;
+			$(`#storyLikeCount-${imageId}`).text(likeCount);
+			
+			
+			
+			likeIcon.removeClass("active");
+			likeIcon.addClass("far");
+		}).fail(error =>{
+			console.log("오류",error);
+		});
+		
+		
+		
+		
+		
 	}
 }
 

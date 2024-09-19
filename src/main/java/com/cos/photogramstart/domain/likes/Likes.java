@@ -15,6 +15,7 @@ import javax.persistence.UniqueConstraint;
 
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.user.User;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -51,6 +52,7 @@ public class Likes { // N
 	private Image image; // 1 
 	
 	// 오류가 터지고 나서 잡아봅시다.
+	@JsonIgnoreProperties({"images"})
 	@JoinColumn(name = "userId") // Likes 테이블의 컬럼 이름을 user가 아닌 userId로 만들어라 
 	@ManyToOne
 	private User user; // 1
