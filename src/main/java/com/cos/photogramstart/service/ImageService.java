@@ -18,6 +18,7 @@ import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.image.ImageRepository;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
+import com.sun.mail.handlers.image_gif;
 
 import lombok.RequiredArgsConstructor;
 
@@ -41,6 +42,8 @@ public class ImageService {
 				
 				// images에 좋아요 상태 담기
 				images.forEach((image)->{
+					
+					image.setLikeCount(image.getLikes().size());
 					
 					image.getLikes().forEach((like) -> {
 						if(like.getUser().getId() == principalId) { // 해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요 한것이지 비교
