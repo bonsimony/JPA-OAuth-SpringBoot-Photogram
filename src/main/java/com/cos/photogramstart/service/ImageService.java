@@ -29,13 +29,41 @@ public class ImageService {
 	private final ImageRepository imageRepository;
 	
 	// import org.springframework.transaction.annotation.Transactional;
-		@Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서 더티체킹을 하고 데이터베이스 flush(반영)를 하는데
-													//  readOnly = true 이렇게 설정하면 읽기전용이기 때문에 데이터베이스에 반영하는 것을 하지 않는다.
-		public Page<Image> 이미지스토리(int principalId, Pageable pageable){
-			Page<Image> images = imageRepository.mStroy(principalId, pageable);
-			return images;
-		}
+			@Transactional(readOnly = true)
+			public Page<Image> 이미지스토리(int principalId, Pageable pageable){
+				Page<Image> images = imageRepository.mStroy(principalId, pageable);
+				
+				
+				/*
+				 * 2(cos) 로그인하면 2번이 구독한 이미지들이 쭉 보이게 되고 그 이미지들을 for문을 돌려 하나씩 뽑아내고 첫번째 이미지에 대한 좋아요
+				 * 정보를 가져와서 그 좋아요가 2(cos)가 좋아요 했는지 확인하면 된다.
+				 */
+				
+				// images에 좋아요 상태 담기
+				images.forEach((image)->{
+					
+					image.getLikes().forEach((like) -> {
+						if(like.getUser().getId() == principalId) { // 해당 이미지에 좋아요한 사람들을 찾아서 현재 로그인한 사람이 좋아요 한것이지 비교
+							image.setLikeState(true);
+						}
+					});
+					
+				});
+				
+				
+				return images;
+			}
 	
+	
+	// import org.springframework.transaction.annotation.Transactional;
+//		@Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서 더티체킹을 하고 데이터베이스 flush(반영)를 하는데
+//													//  readOnly = true 이렇게 설정하면 읽기전용이기 때문에 데이터베이스에 반영하는 것을 하지 않는다.
+//		public Page<Image> 이미지스토리(int principalId, Pageable pageable){
+//			Page<Image> images = imageRepository.mStroy(principalId, pageable);
+//			return images;
+//		}
+	
+		
 	// import org.springframework.transaction.annotation.Transactional;
 //	@Transactional(readOnly = true) // 영속성 컨텍스트 변경 감지를 해서 더티체킹을 하고 데이터베이스 flush(반영)를 하는데
 //												//  readOnly = true 이렇게 설정하면 읽기전용이기 때문에 데이터베이스에 반영하는 것을 하지 않는다.

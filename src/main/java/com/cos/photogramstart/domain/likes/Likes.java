@@ -45,6 +45,7 @@ public class Likes { // N
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
+	// 무한 참조됨
 	@JoinColumn(name = "imageId")	// Like 테이블의 컬럼 이름을 image가 아닌 imageId로 만들어라
 	@ManyToOne // @ManytoOne은 Eager 전략이고 @OnetoMany는 Lazy 전략이다.
 	private Image image; // 1 

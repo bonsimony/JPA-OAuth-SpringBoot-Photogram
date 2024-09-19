@@ -2,6 +2,7 @@ package com.cos.photogramstart.domain.image;
 
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,8 +10,11 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
+import javax.persistence.Transient;
 
+import com.cos.photogramstart.domain.likes.Likes;
 import com.cos.photogramstart.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -41,15 +45,44 @@ public class Image {
 	private User user;
 	
 	//이미지 좋아요
+	@JsonIgnoreProperties({"image"})
+	@OneToMany(mappedBy = "image") // mappedBy = "image" -> Likes 객체의 변수 image 
+	private List<Likes> likes;
 	
 	//댓글
 	
 	private LocalDateTime createDate;
 	
+	// import javax.persistence.Transient;
+	@Transient // DB에 컬럼이 만들어지지 않는다.
+	private boolean likeState;
+	
 	@PrePersist
 	public void create() {
 		this.createDate = LocalDateTime.now();
 	}
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+// Image를 리턴할때 Image 내부의 Likes 내부의 Image를 리턴하지 않게 해야한다!!!!!
+// Image -> Likes -> Image -> Likes -> ...
+// 무한참조가 발생하기 때문에 이를 막기 위해서는 @JsonIgnoreProperties({"image"})를 사용한다!!!!!
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
