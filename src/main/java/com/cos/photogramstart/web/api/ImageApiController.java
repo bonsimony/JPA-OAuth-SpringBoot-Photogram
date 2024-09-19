@@ -9,12 +9,16 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
 import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.service.ImageService;
+import com.cos.photogramstart.service.LikesService;
 import com.cos.photogramstart.web.dto.CMRespDto;
 
 import lombok.RequiredArgsConstructor;
@@ -24,6 +28,7 @@ import lombok.RequiredArgsConstructor;
 public class ImageApiController {
 
 	private final ImageService imageService;
+	private final LikesService likesService;
 	
 	@GetMapping("/api/image")
 	public ResponseEntity<?> imageStory
@@ -46,5 +51,45 @@ public class ImageApiController {
 //		
 //		return new ResponseEntity<>( new CMRespDto<>(1, "성공", images), HttpStatus.OK );
 //	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@PostMapping("/api/image/{imageId}/likes")
+	public ResponseEntity<?> likes(
+												@PathVariable int imageId
+												,@AuthenticationPrincipal PrincipalDetails principalDetails
+											 )
+	{
+		likesService.좋아요(imageId, principalDetails.getUser().getId());
+		return new ResponseEntity<>(new CMRespDto<>(1, "좋아요 성공", null), HttpStatus.CREATED); 
+														 // 테이블에 데이터를 INSERT 했다는 상태코드는 보통 201번을 사용하는데 
+														 // HttpStatus.CREATED가 201번을 뜻한다.
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	@DeleteMapping("/api/image/{imageId}/likes")
+	public ResponseEntity<?> unlikes(
+												@PathVariable int imageId
+												,@AuthenticationPrincipal PrincipalDetails principalDetails
+											 )
+	{
+		likesService.좋아요취소(imageId, principalDetails.getUser().getId());
+		return new ResponseEntity<>(new CMRespDto<>(1, "좋아요취소성공", null), HttpStatus.OK); 
+	}
 	
 }

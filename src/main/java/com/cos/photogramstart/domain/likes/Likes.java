@@ -54,10 +54,10 @@ public class Likes { // N
 	@ManyToOne
 	private User user; // 1
 	
-	private LocalDateTime createDate;
+	private LocalDateTime createDate; 
 	
-	@PrePersist
-	public void createDate() {
+	@PrePersist 
+	public void createDate() { // nativeQuery 사용 시 작동하지 않는다!!!!!
 		this.createDate = LocalDateTime.now();
 	}
 	
