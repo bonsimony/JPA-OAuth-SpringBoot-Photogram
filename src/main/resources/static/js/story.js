@@ -70,7 +70,7 @@ function getStoryItem(image) {
 	
 	<div class="sl__item__header">
 		<div>
-			<img class="profile-image" src="/upload/${image.user.profileUrl}"
+			<img class="profile-image" src="/upload/${image.user.profileImageUrl}"
 				onerror="this.src='/images/person.jpeg'" />
 		</div>
 		<div>${image.user.username}</div>
@@ -107,7 +107,9 @@ function getStoryItem(image) {
 			<p>${image.caption}</p>
 		</div>
 
-		<div id="storyCommentList-1">
+		<div id="storyCommentList-${image.id}">
+
+
 
 			<div class="sl__item__contents__comment" id="storyCommentItem-1"">
 				<p>
@@ -120,11 +122,13 @@ function getStoryItem(image) {
 
 			</div>
 
+
+
 		</div>
 
 		<div class="sl__item__input">
-			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-1" />
-			<button type="button" onClick="addComment()">게시</button>
+			<input type="text" placeholder="댓글 달기..." id="storyCommentInput-${image.id}" />
+			<button type="button" onClick="addComment(${image.id})">게시</button>
 		</div>
 
 	</div>
@@ -285,20 +289,49 @@ function toggleLike(imageId) {
 
 
 
-// (4) 댓글쓰기
-function addComment() {
+function addComment(imageId) {
 
-	let commentInput = $("#storyCommentInput-1");
-	let commentList = $("#storyCommentList-1");
+	let commentInput = $(`#storyCommentInput-${imageId}`);
+	let commentList = $(`#storyCommentList-${imageId}`);
 
 	let data = {
-		content: commentInput.val()
+		imageId : imageId
+		, content : commentInput.val()
 	}
+	
+	
+	//console.log(data);
+	//console.log(JSON.stringify(data));
+	
+	//return;
+	
+	//alert(data.content);
+	//return;
+	
+	if(data.content === ""){
+		alert("댓글을 작성해주세요!");
+		return;
+	}
+	
+	
 
 	if (data.content === "") {
 		alert("댓글을 작성해주세요!");
 		return;
 	}
+	
+	//ajax().done().fail();
+	ajax({
+		type : "post"
+		, url : "/api/comment/"
+		, data : JSON.stringify(data)
+		, contentType : "application/json; charset=urf-8"
+		, dataType : "json"
+	}).done(res=>{ //  res에는 항상 통신의 결과가 담긴다!!!
+		console.log("성공", res);
+	}).fail(error=>{
+		console.log("오류", error);
+	});
 
 	let content = `
 			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
@@ -309,9 +342,43 @@ function addComment() {
 			    <button><i class="fas fa-times"></i></button>
 			  </div>
 	`;
-	commentList.prepend(content);
+	commentList.prepend(content); // prepend는 화면에서 데이터가 위로 쌓인다 -> 최신 데이터가 위에 위치한다.
+											   // append는 화면에서 데이터가 아래로 쌓인다 -> 오래된 데이터가 위에 위치한다.
 	commentInput.val("");
 }
+
+
+
+
+
+
+// (4) 댓글쓰기
+//function addComment() {
+//
+//	let commentInput = $("#storyCommentInput-1");
+//	let commentList = $("#storyCommentList-1");
+//
+//	let data = {
+//		content: commentInput.val()
+//	}
+//
+//	if (data.content === "") {
+//		alert("댓글을 작성해주세요!");
+//		return;
+//	}
+//
+//	let content = `
+//			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
+//			    <p>
+//			      <b>GilDong :</b>
+//			      댓글 샘플입니다.
+//			    </p>
+//			    <button><i class="fas fa-times"></i></button>
+//			  </div>
+//	`;
+//	commentList.prepend(content);
+//	commentInput.val("");
+//}
 
 // (5) 댓글 삭제
 function deleteComment() {
