@@ -320,12 +320,12 @@ function addComment(imageId) {
 		return;
 	}
 	
-	//ajax().done().fail();
-	ajax({
+	//$.ajax().done().fail();
+	$.ajax({
 		type : "post"
 		, url : "/api/comment/"
 		, data : JSON.stringify(data)
-		, contentType : "application/json; charset=urf-8"
+		, contentType : "application/json;charset=urf-8"
 		, dataType : "json"
 	}).done(res=>{ //  res에는 항상 통신의 결과가 담긴다!!!
 		console.log("성공", res);
