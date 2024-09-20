@@ -13,10 +13,13 @@ spring:
       suffix: .jsp
       
   datasource:
-    driver-class-name: org.mariadb.jdbc.Driver
-    url: jdbc:mariadb://localhost:3306/photogram?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
+    # driver-class-name: org.mariadb.jdbc.Driver
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    # url: jdbc:mariadb://localhost:3306/photogram?serverTimezone=Asia/Seoul&allowPublicKeyRetrieval=true&useSSL=false
+    url: jdbc:mysql://localhost:3307/photogram?serverTimezone=Asia/Seoul
     username: bonsimony
-    password: bonsimony1234
+    # password: bonsimony1234 
+    password: bonsimony5678 
     
   jpa:
     open-in-view: true #true #false
