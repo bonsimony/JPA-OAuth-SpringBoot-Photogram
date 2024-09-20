@@ -51,6 +51,7 @@ public class Image {
 	
 	//댓글
 	
+	
 	private LocalDateTime createDate;
 	
 	// import javax.persistence.Transient;
