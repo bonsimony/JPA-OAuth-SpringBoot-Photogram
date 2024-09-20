@@ -29,6 +29,11 @@ public class ImageService {
 
 	private final ImageRepository imageRepository;
 	
+	@Transactional(readOnly = true)
+	public List<Image> 인기사진(){
+		return imageRepository.mPopular();
+	}
+	
 	// import org.springframework.transaction.annotation.Transactional;
 			@Transactional(readOnly = true)
 			public Page<Image> 이미지스토리(int principalId, Pageable pageable){

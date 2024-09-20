@@ -1,11 +1,15 @@
 package com.cos.photogramstart.web;
 
+import java.util.List;
+
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 
 import com.cos.photogramstart.config.auth.PrincipalDetails;
+import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.handler.ex.CustomValidationException;
 import com.cos.photogramstart.service.ImageService;
 import com.cos.photogramstart.web.dto.image.ImageUploadDto;
@@ -31,11 +35,50 @@ public class ImageController {
 	}
 	
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	/*
+	 * API 구현하게 된다면? 
+	 * 브라우저에서 요청하는게 아니라 
+	 * 안드로이드, ios에서 요청을 했을 경우에는 데이터를 리턴해서 전달하면 되지만 
+	 * 그 상황이 아니기 때문에 API로 구현하지 않는다.
+	 */
 	@GetMapping("/image/popular")
-	public String popular() {
+	public String popular(Model model) {
+		
+		// api는 데이터를 리턴하는 서버!!
+		List<Image> images = imageService.인기사진();
+		
+		model.addAttribute("images", images);
 		
 		return "image/popular";
 	}
+	
+	
+	
+	
+	
+//	@GetMapping("/image/popular")
+//	public String popular() {
+//		
+//		return "image/popular";
+//	}
+	
+
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	@GetMapping("/image/upload")
