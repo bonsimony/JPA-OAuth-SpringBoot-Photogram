@@ -63,7 +63,6 @@ public class SubscribeService {
 									.setParameter(3, pageUserId);
 		
 		
-		
 		// 쿼리 실행 (qlrm 라이브러리 필요 = Dto에 DB결과를 매핑하기 위해서)
 		// import org.qlrm.mapper.JpaResultMapper;
 			// qlrm은 스프링부트에서 제공하는 라이브러리가 아니다.
@@ -71,6 +70,8 @@ public class SubscribeService {
 			// qlrm(Query Language Result Mapper)이란? 데이터베이스에서 결과를 자바 클래스를 매핑해주는 라이브러리이다.
 		JpaResultMapper result = new JpaResultMapper();
 		List<SubscribeDto> subscribeDtos = result.list(query, SubscribeDto.class);
+		
+		
 		
 		return subscribeDtos;
 	}

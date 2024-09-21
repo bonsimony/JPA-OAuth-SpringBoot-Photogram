@@ -20,5 +20,5 @@ public class SubscribeDto {
 	private Integer subscribeState;
 	
 	private Integer equalUserState;
-	
+
 }

@@ -107,23 +107,27 @@ function getStoryItem(image) {
 			<p>${image.caption}</p>
 		</div>
 
-		<div id="storyCommentList-${image.id}">
+		<div id="storyCommentList-${image.id}">`;
 
 
 
-			<div class="sl__item__contents__comment" id="storyCommentItem-1"">
+		image.comments.forEach((comment)=>{
+			item += `<div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}">
 				<p>
-					<b>Lovely :</b> 부럽습니다.
+					<b>${comment.user.username}</b> ${comment.content}
 				</p>
 
 				<button>
 					<i class="fas fa-times"></i>
 				</button>
 
-			</div>
+			</div>`;
+		}); 
+		
+			
 
 
-
+	item += `
 		</div>
 
 		<div class="sl__item__input">
@@ -328,23 +332,31 @@ function addComment(imageId) {
 		, contentType : "application/json;charset=urf-8"
 		, dataType : "json"
 	}).done(res=>{ //  res에는 항상 통신의 결과가 담긴다!!!
-		console.log("성공", res);
+		//console.log("성공", res);
+		
+	let comment = res.data;	
+		
+	let content = `
+		  <div class="sl__item__contents__comment" id="storyCommentItem-${comment.id}"> 
+		    <p>
+		      <b>${comment.user.username}</b>
+		     ${comment.content}
+		    </p>
+		    <button><i class="fas fa-times"></i></button>
+		  </div>
+	`;
+	
+	commentList.prepend(content); // prepend는 화면에서 데이터가 위로 쌓인다 -> 최신 데이터가 위에 위치한다.
+												   // append는 화면에서 데이터가 아래로 쌓인다 -> 오래된 데이터가 위에 위치한다.
+											   
+											   
+											   
 	}).fail(error=>{
 		console.log("오류", error);
 	});
 
-	let content = `
-			  <div class="sl__item__contents__comment" id="storyCommentItem-2""> 
-			    <p>
-			      <b>GilDong :</b>
-			      댓글 샘플입니다.
-			    </p>
-			    <button><i class="fas fa-times"></i></button>
-			  </div>
-	`;
-	commentList.prepend(content); // prepend는 화면에서 데이터가 위로 쌓인다 -> 최신 데이터가 위에 위치한다.
-											   // append는 화면에서 데이터가 아래로 쌓인다 -> 오래된 데이터가 위에 위치한다.
-	commentInput.val("");
+	
+	commentInput.val(""); // 인풋 필드를 깨끗하게 비워준다.
 }
 
 
