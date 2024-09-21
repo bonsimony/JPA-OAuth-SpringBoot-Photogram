@@ -9,6 +9,8 @@ import com.cos.photogramstart.domain.image.Image;
 import com.cos.photogramstart.domain.user.User;
 import com.cos.photogramstart.domain.user.UserRepository;
 import com.cos.photogramstart.handler.ex.CustomApiException;
+import com.cos.photogramstart.handler.ex.CustomException;
+import com.cos.photogramstart.handler.ex.CustomValidationApiException;
 
 import lombok.RequiredArgsConstructor;
 
@@ -84,9 +86,16 @@ public class CommentService {
 	
 	
 	@Transactional
-	public void 댓글삭제() {
-	
-	
+	public void 댓글삭제(int id) {
+		
+		
+		try {
+			commentRepository.deleteById(id);
+		}catch(Exception e) {
+			throw new CustomApiException(e.getMessage());
+		}
+		
+		
 	}
 	
 	
