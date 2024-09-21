@@ -337,13 +337,6 @@ function addComment(imageId) {
 		return;
 	}
 	
-	
-
-	if (data.content === "") {
-		alert("댓글을 작성해주세요!");
-		return;
-	}
-	
 	//$.ajax().done().fail();
 	$.ajax({
 		type : "post"
@@ -381,7 +374,12 @@ function addComment(imageId) {
 											   
 											   
 	}).fail(error=>{
-		console.log("오류", error);
+		//console.log("오류", error.responseJSON);
+		//console.log("오류", error.responseJSON.message);
+		//console.log("오류", error.responseJSON.data.content);
+		
+		alert(error.responseJSON.data.content);
+		
 	});
 
 	
