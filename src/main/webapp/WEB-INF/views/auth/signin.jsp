@@ -53,10 +53,19 @@
                         
                         <!-- Oauth 소셜로그인 -->
                         <div class="login__facebook">
-                            <button>
+                        
+                        
+                        
+                            <!-- <button> -->
+                            <button onclick = "javascript:location.href='/oauth2/authorization/facebook'">
+                           																				   <!-- authorization은 키값으므로 다른 것으로 대체할 수 없다. -->
+                           																				   <!-- facebook은 application.yml에 선언한 변수를 말한다. -->
                                 <i class="fab fa-facebook-square"></i>
                                 <span>Facebook으로 로그인</span>
                             </button>
+                            
+                            
+                            
                         </div>
                         <!-- Oauth 소셜로그인end -->
                     </div>

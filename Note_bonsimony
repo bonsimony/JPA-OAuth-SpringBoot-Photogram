@@ -32,3 +32,44 @@ AOP 처리를 하기 위해서는 라이브러리가 필요하다.
 https://mvnrepository.com/ 해당 URL로 들어가서
 Spring Boot Starter AOP 2.4.5를 pom.xml에 추가해준다
 
+
+
+
+--------------------------------------------------------------------------------------------------------------- 
+
+Oauth2 
+
+1. OAuth를 하기 위해서는 pom.xml에 dependency를 추가해줘야 한다.
+
+<dependency>
+	<groupId>org.springframework.boot</groupId>
+	<artifactId>spring-boot-starter-oauth2-client</artifactId>
+</dependency> 
+
+2. 브라우저에서 Facebook 개발자 센터로 들어간다.
+
+https://developers.facebook.com/?locale=ko_KR
+
+	01. 로그인을 한다.
+	02. 우측 상단에 내앱을 클릭한다.
+	03. 초록색으로 되어있는 앱 만들기 버튼을 클릭한다.
+	04. 앱 만들기
+		04.01. 앱 유형선택에서 없음을 클릭한다.
+		04.02. 표시할 앱 이름을 photogram-springboot라고 한다.
+		04.03. 비밀번호를 입력한다.
+	05. Facebook 로그인 제품을 추가해준다.
+	06. 웹이라는 탭을 클릭한다.
+		06.01. http://localhost:8080 입력 후 save 버튼을 클릭한다.
+		06.02. 계속해서 다음 버튼을 클릭하면 Facebook 로그인 제품이 추가된다.
+	07. 왼쪽 세로로 대시보드부터 활동로그 탭이 있는걸 확인할 수 있는데 설정에 기본 설정을 클릭한다. 
+		07.01. 앱 ID와 앱 시크릿 코드를 application.yml 파일에 추가한다.
+         07.02. scope도 입력해준다. scope란? 페이스북이란 곳에서 어떤 데이터를 받을지에 대한 범위를 말한다.
+			07.02.01 Facebook 개발자센터에서 로그인된 상태에서 상단에 문서 탭을 클릭한다.
+				07.02.01.01 Facebook Login을 클릭한다.
+				07.02.01.02 웹을 클릭한다.
+				07.02.01.03 아래 코드로 되어있는 부분을 확인한다. 
+					FB.login(function(response) {
+  						// handle the response
+					}, {scope: 'public_profile,email'});
+		07.03. application.yml에 scope까지 입력해주면 완료가 된다.
+				

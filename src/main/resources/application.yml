@@ -38,6 +38,11 @@ spring:
     user:
       name: test
       password: 1234   
-
+          oauth2:      client:        registration:
+          facebook:
+            client-id: 385262766236093
+            client-secret: c3efd52b6d3abac56482e8d0ccd82cef
+            scope:            - public_profile
+            - email          
 file:
   path: C:/BONSIMONY/workspace/springbootwork/photogram_upload/ 

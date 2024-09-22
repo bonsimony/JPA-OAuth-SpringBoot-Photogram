@@ -8,19 +8,22 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import com.cos.photogramstart.config.oauth.OAuth2DetailsService;
+
+import lombok.RequiredArgsConstructor;
+
 
 // 1. WebSecurityConfigurerAdapter 상속
 // 2. Ioc등록 : @Configuration
 // 3. 해당 파일로 시큐리티를 활성화 : @EnableWebSecurity
 
+@RequiredArgsConstructor
 @EnableWebSecurity //해당 파일로 시큐리티를 활성화
 @Configuration //Ioc 등록   
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		
-	/*
-	 * SecurityConfig가 IoC에 등록될때
-	 * @Bean 어노이테이션을 읽어서 BCryptPasswordEncoder을 들고 있게 된다
-	 */
+		private final OAuth2DetailsService oAuth2DetailsService;
+	
 		@Bean
 		public BCryptPasswordEncoder encode() {
 			return new BCryptPasswordEncoder();
@@ -30,10 +33,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 		protected void configure(HttpSecurity http) throws Exception {
 			
 			http.csrf().disable();
-			
-			//super.configure(http);
-			// super 삭제 - 기존 시큐리티가 가지고 있는 기능이 다 비활성화됨
-			
 			http.authorizeRequests()
 				.antMatchers(
 									"/"
@@ -43,32 +42,87 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 									, "/comment/**"
 									, "/api/**"
 									).authenticated()
-				// 해당 주소들은 인증이 필요함
-				
 				.anyRequest().permitAll()
-				// 그 외 주소들은 인증이 필요하지 않음
-				
 				.and()
 				.formLogin()
-				// 인증이 된 페이지들은 로그인 페이지로 이동함
+				.loginPage("/auth/signin") 
+				.loginProcessingUrl("/auth/signin") 
+				.defaultSuccessUrl("/")
+				.and()
+				.oauth2Login() 
+				.userInfoEndpoint() 
+				.userService(oAuth2DetailsService)
+				;
 				
-				.loginPage("/auth/signin") // GET
-				// 해당 로그인 페이지 경로는 /auth/signin
-				
-				
-				
-				
-				.loginProcessingUrl("/auth/signin") // POST -> 스프링 시큐리티가 로그인 프로세스 진행
-				
-				
-				
-				
-				.defaultSuccessUrl("/");
-				//로그인을 정상적으로 처리하게 되면 / 경로로 이동시킴
 		
 		}
 
 }
+
+//@EnableWebSecurity //해당 파일로 시큐리티를 활성화
+//@Configuration //Ioc 등록   
+//public class SecurityConfig extends WebSecurityConfigurerAdapter{
+//		
+//	/*
+//	 * SecurityConfig가 IoC에 등록될때
+//	 * @Bean 어노이테이션을 읽어서 BCryptPasswordEncoder을 들고 있게 된다
+//	 */
+//		@Bean
+//		public BCryptPasswordEncoder encode() {
+//			return new BCryptPasswordEncoder();
+//		}
+//	
+//		@Override
+//		protected void configure(HttpSecurity http) throws Exception {
+//			
+//			http.csrf().disable();
+//			
+//			//super.configure(http);
+//			// super 삭제 - 기존 시큐리티가 가지고 있는 기능이 다 비활성화됨
+//			
+//			http.authorizeRequests()
+//				.antMatchers(
+//									"/"
+//									, "/user/**"
+//									,"/image/**"
+//									, "/subscribe/**"
+//									, "/comment/**"
+//									, "/api/**"
+//									).authenticated()
+//				// 해당 주소들은 인증이 필요함
+//				
+//				.anyRequest().permitAll()
+//				// 그 외 주소들은 인증이 필요하지 않음
+//				
+//				.and()
+//				.formLogin()
+//				// 인증이 된 페이지들은 로그인 페이지로 이동함
+//				
+//				.loginPage("/auth/signin") // GET
+//				// 해당 로그인 페이지 경로는 /auth/signin
+//				
+//				
+//				
+//				
+//				.loginProcessingUrl("/auth/signin") // POST -> 스프링 시큐리티가 로그인 프로세스 진행
+//				
+//				
+//				
+//				
+//				.defaultSuccessUrl("/")
+//				//로그인을 정상적으로 처리하게 되면 / 경로로 이동시킴
+//				
+//				.and()
+//				
+//				.oauth2Login() // form 로그인도 하는데 oauth 로그인도 할것이다.
+//				.userInfoEndpoint() // oauth2 로그인을 하면 최종응답을 회원정보로 바로 받을 수 있따.
+//				.userService(null)
+//				;
+//				
+//		
+//		}
+//
+//}
 
 /*
  * IOC란? Inversion of Control 의 줄임말로, 제어의 역전 이라는 뜻이 된다. 제어의 역전이란 메소드나 객체의 호출작업을
