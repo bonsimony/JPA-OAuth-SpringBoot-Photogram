@@ -85,22 +85,24 @@ public class UserApiController {
 													, @AuthenticationPrincipal PrincipalDetails principalDetails
 												) 
 	{
+
 		
-		
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				
-				errorMap.put(error.getField(), error.getDefaultMessage());
-				
-				
-			}
-			
-			throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
-			
-		}
-		else {
+// 	 	ValidationAdvice.java 파일에서 처리함!!!!!
+//		
+//		if(bindingResult.hasErrors()) {
+//			Map<String, String> errorMap = new HashMap<>();
+//			
+//			for(FieldError error : bindingResult.getFieldErrors()) {
+//				
+//				errorMap.put(error.getField(), error.getDefaultMessage());
+//				
+//				
+//			}
+//			
+//			throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
+//			
+//		}
+//		else {
 			User userEntity = userService.회원수정(id, userUpdateDto.toEntity());
 			principalDetails.setUser(userEntity); // 세션 정보 변경
 			return new CMRespDto<>(1, "회원수정완료", userEntity); // 응답시에 userEntity의 모든 getter 함수가 호출되고 JSON으로 파싱하여 응답한다.
@@ -114,9 +116,9 @@ public class UserApiController {
 																							// Image 객체 내 모든 getter를 호출하고 private User user; 로 인하여 
 																							// User 객체를 또 호출하게 된다.
 																							// 무한참조가 발생한다.
-		}
+		//}
 		
-	}
+}
 	
 	
 	

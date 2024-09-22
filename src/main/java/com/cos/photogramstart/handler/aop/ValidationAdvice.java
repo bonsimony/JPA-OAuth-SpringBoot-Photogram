@@ -1,9 +1,18 @@
 package com.cos.photogramstart.handler.aop;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
+import org.hibernate.internal.build.AllowSysOut;
 import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.FieldError;
+
+import com.cos.photogramstart.handler.ex.CustomValidationApiException;
+import com.cos.photogramstart.handler.ex.CustomValidationException;
 
 // 여기서 말하는 Advice는 공통기능이라는 말이다!!!
 
@@ -47,10 +56,58 @@ public class ValidationAdvice {
 		
 		/*********************************************************************/
 		
-		System.out.println("web api 컨트롤러 =========================");
+		//System.out.println("web api 컨트롤러 =========================");
+		
+		Object[] args = proceedingJoinPoint.getArgs();
+		for(Object arg : args) {
+			//System.out.println(arg);
+			
+			if(arg instanceof BindingResult) {
+				// System.out.println("유효성 검사를 하는 함수 입니다.");
+			
+				
+				
+			BindingResult bindingResult = (BindingResult) arg; // BindingResult로 다운캐스팅 한다.
+				
+				
+				
+				
+				
+				if(bindingResult.hasErrors()) {
+					
+					//System.out.println("================");
+					//System.out.println("bindingResult.hasErrors()");
+					//System.out.println("================");
+					
+					Map<String, String> errorMap = new HashMap<>();
+					
+					for(FieldError error : bindingResult.getFieldErrors()) {
+						
+						errorMap.put(error.getField(), error.getDefaultMessage());
+						
+						
+					}
+					
+					throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
+					
+				}
+				
+				
+				
+				
+				
+				
+			}
+		}
+		
+		//System.out.println("=================================");
+		//System.out.println("return proceedingJoinPoint.proceed() 전까지 왔는지 확인");
+		//System.out.println("=================================");
 		
 		return proceedingJoinPoint.proceed(); // *** commentSave 함수가 실행됨
 		// return proceedingJoinPoint.proceed()이란? 해당 함수로 다시 돌아가라는 것을 뜻한다.
+		
+		
 	} 
 	
 	
@@ -61,7 +118,42 @@ public class ValidationAdvice {
 	@Around("execution(* com.cos.photogramstart.web.*Controller.*(..))")
 	public Object advice(ProceedingJoinPoint proceedingJoinPoint)  throws Throwable{
 		
-		System.out.println("web 컨트롤러 =========================");
+		//System.out.println("web 컨트롤러 =========================");
+		
+		Object[] args = proceedingJoinPoint.getArgs();
+		for(Object arg : args) {
+			// System.out.println(arg);
+			
+			if(arg instanceof BindingResult) {
+				
+				//System.out.println("유효성 검사를 하는 함수 입니다.");
+				
+				BindingResult bindingResult = (BindingResult) arg; // BindingResult로 다운캐스팅 한다.
+				
+				
+				
+				
+				if(bindingResult.hasErrors()) {
+					Map<String, String> errorMap = new HashMap<>();
+					
+					// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
+					for(FieldError error : bindingResult.getFieldErrors()) {
+						errorMap.put(error.getField(), error.getDefaultMessage());
+						System.out.println("===================");
+						System.out.println(error.getDefaultMessage());
+						System.out.println("===================");
+					}
+					
+					throw new CustomValidationException("유효성 검사 실패함", errorMap);
+					
+				}
+				
+				
+				
+				
+				
+			}
+		}
 		
 		return proceedingJoinPoint.proceed();
 	}

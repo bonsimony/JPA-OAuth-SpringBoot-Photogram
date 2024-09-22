@@ -30,7 +30,7 @@ import lombok.RequiredArgsConstructor;
 public class CommentApiController {
 	
 	private final CommentService commentService; 
-	
+
 	@PostMapping("/api/comment")
 	public ResponseEntity<?> commentSave
 	(
@@ -40,20 +40,6 @@ public class CommentApiController {
 			, @AuthenticationPrincipal PrincipalDetails principalDetails
 	)
 	{
-															
-		if(bindingResult.hasErrors()) {
-			Map<String, String> errorMap = new HashMap<>();
-			
-			for(FieldError error : bindingResult.getFieldErrors()) {
-				
-				errorMap.put(error.getField(), error.getDefaultMessage());
-				
-				
-			}
-			
-			throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
-			
-		}
 		
 		Comment comment = commentService.댓글쓰기(
 																		commentDto.getContent() 				// content
@@ -63,6 +49,46 @@ public class CommentApiController {
 		
 		return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기 성공", comment), HttpStatus.CREATED); // HttpStatus.CREATED -> 상태코드 201번
 	}
+	
+	
+	
+	
+	
+//	@PostMapping("/api/comment")
+//	public ResponseEntity<?> commentSave
+//	(
+//			@Valid @RequestBody CommentDto commentDto
+//			, BindingResult bindingResult
+//			
+//			, @AuthenticationPrincipal PrincipalDetails principalDetails
+//	)
+//	{
+//
+//
+//// 	 	ValidationAdvice.java 파일에서 처리함!!!!!
+////
+////		if(bindingResult.hasErrors()) {
+////			Map<String, String> errorMap = new HashMap<>();
+////			
+////			for(FieldError error : bindingResult.getFieldErrors()) {
+////				
+////				errorMap.put(error.getField(), error.getDefaultMessage());
+////				
+////				
+////			}
+////			
+////			throw new CustomValidationApiException("유효성 검사 실패함", errorMap);
+////			
+////		}
+//		
+//		Comment comment = commentService.댓글쓰기(
+//																		commentDto.getContent() 				// content
+//																		, commentDto.getImageId()				// imageId
+//																		, principalDetails.getUser().getId()     	// userId
+//																	); 
+//		
+//		return new ResponseEntity<>(new CMRespDto<>(1, "댓글쓰기 성공", comment), HttpStatus.CREATED); // HttpStatus.CREATED -> 상태코드 201번
+//	}
 	
 	
 	

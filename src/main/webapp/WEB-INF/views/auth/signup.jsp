@@ -32,7 +32,22 @@
                         																				서버에게 아래 데이터들을 달라고 하는 것이 아닌 주기 위해서 post를 사용하고 
                         																				데이터에베이스에 INSERT 하기 위함 
                         																			-->
-                            <input type="text" name="username" placeholder="유저네임" required="required" maxlength = "20"/>
+                        																			
+                        																			
+                        																			
+                        	<!------------------------------------------------------------------------------------------------------------  																		
+                        		AOP 처리를 하기 위해 ValidationAdvice 파일 생성 후 
+                        		BindingResult 잘 작동하는지 확인시에 required = "required" 제거했었음
+                        	-------------------------------------------------------------------------------------------------------------->			
+                        																
+                        	<!-- <input type="text" name="username" placeholder="유저네임" maxlength = "20"/> -->
+                        																			
+                        	<!------------------------------------------------------------------------------------------------------------->
+                        				
+                        				
+                        				
+                        																			
+                             <input type="text" name="username" placeholder="유저네임" required="required" maxlength = "20"/> 
                             																						  <!-- required 속성에 required 값이 들어가 있으면 필수입력 체크가 된다.
                             																						  하지만 postman 프로그램으로 x-www-form-urlencode 로 값을 넘기면 값을 넘길 수 있기 때문에
                             																						  프론트뿐만 아니라 백엔드에도 막아줘야한다 -->

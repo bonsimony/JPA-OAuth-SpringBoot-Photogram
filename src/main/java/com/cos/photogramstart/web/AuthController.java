@@ -68,6 +68,127 @@ public class AuthController {
 			return "auth/signup";
 		}
 
+
+		
+		
+		
+		
+		
+
+		@PostMapping("/auth/signup")
+		public String signup(
+											@Valid SignupDto signupDto
+											, BindingResult bindingResult
+										) 
+		{
+
+				User user = signupDto.toEntity();
+				User userEntity = authService.회원가입(user);
+				
+				System.out.println(userEntity);
+				
+				return "auth/signin";
+
+		}
+		
+		
+		
+		
+		
+		
+////		회원가입 -> /auth/signup -> /auth/signin
+//		@PostMapping("/auth/signup")
+//		public String signup(
+//											@Valid SignupDto signupDto
+//											, BindingResult bindingResult
+//										) 
+//		{
+//
+//			
+////			if(bindingResult.hasErrors()) {
+////				Map<String, String> errorMap = new HashMap<>();
+////				
+////				// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
+////				for(FieldError error : bindingResult.getFieldErrors()) {
+////					errorMap.put(error.getField(), error.getDefaultMessage());
+////					System.out.println("===================");
+////					System.out.println(error.getDefaultMessage());
+////					System.out.println("===================");
+////				}
+////			}
+//			
+//			// username 길이 20 초과 - Validation 체크
+////			if(signupDto.getUsername().length() > 20){
+////				
+////				System.out.println("username 갈이 20 초과");
+////			
+////			}
+////			else
+////			{
+////				User user = signupDto.toEntity();
+////				User userEntity = authService.회원가입(user);
+////			}
+//			
+//			
+//
+//			
+//			if(bindingResult.hasErrors()) {
+//				Map<String, String> errorMap = new HashMap<>();
+//				
+//				// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
+//				for(FieldError error : bindingResult.getFieldErrors()) {
+//					errorMap.put(error.getField(), error.getDefaultMessage());
+//					System.out.println("===================");
+//					System.out.println(error.getDefaultMessage());
+//					System.out.println("===================");
+//				}
+//				
+//				/*
+//				 * SignupDto 클래스에서 유효성 검사가 하나라도 실패하면 
+//				 * bindingResult 변수에 담기게 되고 
+//				 * bindingResult에 에러가 하나라도 있으면 
+//				 * HashMap<>에 모두 담고 throw를 통해 exception을 강제로 발동시켜서 에러를 던진다.
+//				 */
+//				throw new CustomValidationException("유효성 검사 실패함", errorMap);
+//				
+//				//throw new RuntimeException("유효성 검사 실패함");
+//				/*
+//				 * RuntimeException을 ControllerExceptionHandler 클래스에서 
+//				 * validationException 함수 값으로 리턴이 되어 화면에 표출
+//				 */
+//			}
+//			else
+//			{
+//				
+//				User user = signupDto.toEntity();
+//				User userEntity = authService.회원가입(user);
+//				
+//				System.out.println(userEntity);
+//				
+//				return "auth/signin";
+//				
+//			}
+//			
+//			
+//		     
+//			//System.out.println("siginup 살행됨?");
+//			
+//			
+//			//User <- SignupDto
+////			User user = signupDto.toEntity();
+////			log.info(user.toString());
+////			
+////			User userEntity = authService.회원가입(user);
+////			System.out.println(userEntity);
+////			
+////			return "auth/signin";
+//			// 회원가입을 성공하면 로그인 화면으로 이동
+//		}
+		
+		
+		
+		
+		
 		
 /****************************************************************/
 		
@@ -151,98 +272,11 @@ public class AuthController {
 		
 /****************************************************************/	
 
-//		// 회원가입 -> /auth/signup -> /auth/signin
-		@PostMapping("/auth/signup")
-		public String signup(
-											@Valid SignupDto signupDto
-											, BindingResult bindingResult
-										) 
-		{
 
-			
-//			if(bindingResult.hasErrors()) {
-//				Map<String, String> errorMap = new HashMap<>();
-//				
-//				// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
-//				for(FieldError error : bindingResult.getFieldErrors()) {
-//					errorMap.put(error.getField(), error.getDefaultMessage());
-//					System.out.println("===================");
-//					System.out.println(error.getDefaultMessage());
-//					System.out.println("===================");
-//				}
-//			}
-			
-			// username 길이 20 초과 - Validation 체크
-//			if(signupDto.getUsername().length() > 20){
-//				
-//				System.out.println("username 갈이 20 초과");
-//			
-//			}
-//			else
-//			{
-//				User user = signupDto.toEntity();
-//				User userEntity = authService.회원가입(user);
-//			}
-			
-			
-
-			
-			if(bindingResult.hasErrors()) {
-				Map<String, String> errorMap = new HashMap<>();
-				
-				// 에러가 나면 BindingResult의 getFieldErrors 컬렉션에 모아준다.
-				for(FieldError error : bindingResult.getFieldErrors()) {
-					errorMap.put(error.getField(), error.getDefaultMessage());
-					System.out.println("===================");
-					System.out.println(error.getDefaultMessage());
-					System.out.println("===================");
-				}
-				
-				/*
-				 * SignupDto 클래스에서 유효성 검사가 하나라도 실패하면 
-				 * bindingResult 변수에 담기게 되고 
-				 * bindingResult에 에러가 하나라도 있으면 
-				 * HashMap<>에 모두 담고 throw를 통해 exception을 강제로 발동시켜서 에러를 던진다.
-				 */
-				throw new CustomValidationException("유효성 검사 실패함", errorMap);
-				
-				//throw new RuntimeException("유효성 검사 실패함");
-				/*
-				 * RuntimeException을 ControllerExceptionHandler 클래스에서 
-				 * validationException 함수 값으로 리턴이 되어 화면에 표출
-				 */
-			}
-			else
-			{
-				
-				User user = signupDto.toEntity();
-				User userEntity = authService.회원가입(user);
-				
-				System.out.println(userEntity);
-				
-				return "auth/signin";
-				
-			}
-			
-			
-		     
-			//System.out.println("siginup 살행됨?");
-			
-			
-			//User <- SignupDto
-//			User user = signupDto.toEntity();
-//			log.info(user.toString());
-//			
-//			User userEntity = authService.회원가입(user);
-//			System.out.println(userEntity);
-//			
-//			return "auth/signin";
-			// 회원가입을 성공하면 로그인 화면으로 이동
-		}
 		
 	
 
-		}		
+}		
 
 
 

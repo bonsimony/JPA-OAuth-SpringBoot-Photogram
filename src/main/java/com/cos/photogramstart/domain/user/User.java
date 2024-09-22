@@ -107,7 +107,35 @@ public class User {
 		public void createDate() {
 			this.createDate = LocalDateTime.now();
 		}
+
 		
+		
+		
+		
+		
+		
+		
+		
+		@Override
+		public String toString() {
+			return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name
+					+ ", website=" + website + ", bio=" + bio + ", email=" + email + ", phone=" + phone + ", gender="
+					+ gender + ", profileImageUrl=" + profileImageUrl + ", role=" + role + ", createDate=" + createDate + "]";
+		}
+		
+		
+		
+		
+		
+		
+//		@Override
+//		public String toString() {
+//			return "User [id=" + id + ", username=" + username + ", password=" + password + ", name=" + name
+//					+ ", website=" + website + ", bio=" + bio + ", email=" + email + ", phone=" + phone + ", gender="
+//					+ gender + ", profileImageUrl=" + profileImageUrl + ", role=" + role + ", images=" + images
+//					+ ", createDate=" + createDate + "]";
+//		}
+			
 }
 
 // 세팅이 끝난 후 user 테이블이 생성됨 - ORM (Object Relational Mapping)
