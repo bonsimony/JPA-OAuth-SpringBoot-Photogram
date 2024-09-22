@@ -38,11 +38,18 @@ public class User {
 		 * @Column 어노테이션을 사용하여 제약조건을 설정하여 
 		 * 동일한 username이 등록되지 않도록 한다.
 		 */
+		
 		@Column(
 				unique = true
-				, length = 20
+				, length = 100					// OAuth2 로그인을 위해 컬럼 길이를 늘린다!!!
 			  )
 		private String username;
+		
+//		@Column(
+//				unique = true
+//				, length = 20
+//			  )
+//		private String username;
 		
 		
 		
